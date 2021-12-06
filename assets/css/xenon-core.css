@@ -2889,8 +2889,8 @@ body.chat-open .user-info-navbar a[data-toggle=chat] {
 
 .user-info-navbar .user-info-menu>li .dropdown-menu.languages li.active a,
 .navbar.horizontal-menu .navbar-inner>.nav>li .dropdown-menu.languages li.active a {
-    background-color: #F1F5F8;
-    color: #00A4EC
+    background-color: #F8F8F8;
+    color: #333333
 }
 
 .user-info-navbar .user-info-menu>li .dropdown-menu.languages li+li,
