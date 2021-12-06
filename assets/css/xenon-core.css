@@ -1001,7 +1001,7 @@ body {
 }
 
 .sidebar-menu .main-menu a:hover {
-    color: #00A4EC
+    color: #333333
 }
 
 .sidebar-menu .main-menu li.active>a {
@@ -2321,11 +2321,11 @@ body.chat-open .user-info-navbar a[data-toggle=chat] {
     content: '';
     position: absolute;
     display: block;
-    height: 2px;
+    height: 4px;
     top: 0;
     left: 0;
     right: 0;
-    background: #00A4EC;
+    background: #181818;
     display: none
 }
 
