@@ -776,7 +776,8 @@ body {
     vertical-align: top;
     border-collapse: collapse;
     border-spacing: 0;
-    table-layout: fixed
+    table-layout: fixed;
+    background-color: #eef0f4;
 }
 
 .boxed-container .page-container {
@@ -796,18 +797,57 @@ body {
 }
 
 .page-container .main-content {
-    display: table-cell;
+    display: block;
     position: relative;
     z-index: 1;
     padding: 30px;
-    padding-bottom: 0;
     vertical-align: top;
     word-break: break-word;
     width: 100%;
+    background-color: #eef0f4;
     -webkit-transition: opacity 100ms ease-in-out;
     -moz-transition: opacity 100ms ease-in-out;
     -o-transition: opacity 100ms ease-in-out;
     transition: opacity 100ms ease-in-out
+}
+
+.page-container .main-content > .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 0 auto;
+    padding: 36px 25px 0 25px;
+    background-color: #f5f6f9;
+    border-radius: 0 0 30px 30px;
+    margin-bottom: 30px;
+    max-width: 2750px;
+}
+
+.page-container .main-content > h4 {
+    margin: 0 auto;
+    padding: 30px 0 0 50px;
+    background-color: #f5f6f9;
+    border-radius: 30px 30px 0 0;
+    max-width: 2750px;
+}
+
+.page-container .main-content .col-sm-3 {
+    width: auto;
+    flex: 1 1 calc(20% - 50px);
+    max-width: 490px;
+    min-width: 250px;
+    margin: 0 25px 36px 25px;
+    padding: 0;
+}
+
+.page-container .main-content .xe-widget.xe-conversations {
+    margin-bottom: 0;
+}
+
+@media (min-width: 2800px) {
+    .page-container .main-content > .row {
+        justify-content: center;
+    }
 }
 
 .page-container .main-content.is-loading {
