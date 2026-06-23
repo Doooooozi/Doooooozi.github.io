@@ -65,3 +65,193 @@
 .img-circle {
     padding: 7px 0;
 }
+
+@media screen and (min-width: 768px) {
+    .sidebar-menu {
+        overflow: hidden;
+        -webkit-transition: width 0.4s cubic-bezier(0.33, 0, 0.1, 1),
+                            box-shadow 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        -moz-transition: width 0.4s cubic-bezier(0.33, 0, 0.1, 1),
+                         box-shadow 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        -o-transition: width 0.4s cubic-bezier(0.33, 0, 0.1, 1),
+                       box-shadow 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        transition: width 0.4s cubic-bezier(0.33, 0, 0.1, 1),
+                    box-shadow 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+    }
+    .sidebar-menu:not(.collapsed) {
+        width: 206.5px;
+        -webkit-box-shadow: 4px 0 32px rgba(0, 0, 0, 0.12);
+        -moz-box-shadow: 4px 0 32px rgba(0, 0, 0, 0.12);
+        box-shadow: 4px 0 32px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Icons: same size/margin both states */
+    .sidebar-menu .main-menu > li > a > i {
+        font-size: 16px !important;
+        margin-right: 10px !important;
+    }
+
+    /* Logo area: fixed min-height */
+    .sidebar-menu .logo-env {
+        position: relative;
+        min-height: 76px;
+        overflow: hidden;
+    }
+    .sidebar-menu .logo-expanded img {
+        max-height: 40px;
+        width: auto;
+    }
+
+    .sidebar-menu:not(.collapsed) .logo-env {
+        padding: 20px 0 19px 19px;
+    }
+
+    /* logo-collapsed (favicon): left-aligned, absolutely positioned */
+    .sidebar-menu .logo-collapsed {
+        display: block !important;
+        position: absolute;
+        left: 20px;
+        right: auto;
+        top: 20px;
+        text-align: left !important;
+    }
+    .sidebar-menu.collapsed .logo-collapsed {
+        opacity: 1;
+        -webkit-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1) 0s;
+        -moz-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1) 0s;
+        -o-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1) 0s;
+        transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1) 0s;
+    }
+    .sidebar-menu:not(.collapsed) .logo-collapsed {
+        opacity: 0;
+        -webkit-transition: opacity 0.01s ease-out 0s;
+        -moz-transition: opacity 0.01s ease-out 0s;
+        -o-transition: opacity 0.01s ease-out 0s;
+        transition: opacity 0.01s ease-out 0s;
+    }
+
+    /* logo-expanded */
+    .sidebar-menu .logo-expanded { display: block !important; }
+    .sidebar-menu.collapsed .logo-expanded {
+        opacity: 0;
+        -webkit-transition: opacity 0.01s ease-out 0s;
+        -moz-transition: opacity 0.01s ease-out 0s;
+        -o-transition: opacity 0.01s ease-out 0s;
+        transition: opacity 0.01s ease-out 0s;
+    }
+    .sidebar-menu:not(.collapsed) .logo-expanded {
+        opacity: 1;
+        -webkit-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1) 0s;
+        -moz-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1) 0s;
+        -o-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1) 0s;
+        transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1) 0s;
+    }
+
+    /* Main menu: padding=0, left-aligned both states, icon position fixed */
+    .sidebar-menu .main-menu {
+        padding: 0;
+    }
+    .sidebar-menu:not(.collapsed) .main-menu {
+        margin-top: 8.5px;
+    }
+    .sidebar-menu.collapsed .main-menu {
+        margin-top: 11.5px;
+    }
+    .sidebar-menu .main-menu > li,
+    .sidebar-menu.collapsed .main-menu > li {
+        text-align: left !important;
+    }
+    .sidebar-menu.collapsed .main-menu > li > a {
+        position: relative;
+        padding: 13px 5px 13px 28px;
+    }
+
+    /* Icon vertical spacing adjustments (collapsed state only) */
+
+    .sidebar-menu:not(.collapsed) .main-menu > li > a {
+        position: relative;
+        padding: 13px 5px 13px 28px;
+    }
+
+    /* Sub-menu text alignment: match first-level text start (60px from left) */
+    .sidebar-menu:not(.collapsed) .main-menu ul li > a {
+        padding-left: 60px;
+    }
+
+    /* Menu text: absolute positioned → zero height → no jitter */
+    .sidebar-menu .main-menu > li > a > span:not(.label) {
+        position: absolute;
+        left: 60px;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+        white-space: nowrap;
+    }
+    .sidebar-menu.collapsed .main-menu > li > a > span:not(.label) {
+        opacity: 0;
+    }
+    .sidebar-menu:not(.collapsed) .main-menu > li > a > span:not(.label) {
+        opacity: 1;
+        -webkit-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        -moz-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        -o-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+    }
+
+    /* === ARROWS (always absolute → never affects <a> height → NO JITTER) === */
+    .sidebar-menu .main-menu > li.has-sub > a:before {
+        position: absolute !important;
+        right: 22px;
+        top: 50%;
+        -webkit-transform: translateY(-50%) rotate(-90deg);
+        -moz-transform: translateY(-50%) rotate(-90deg);
+        -o-transform: translateY(-50%) rotate(-90deg);
+        transform: translateY(-50%) rotate(-90deg);
+        float: none !important;
+        margin-left: 0 !important;
+        display: inline-block !important;
+        -webkit-transition: -webkit-transform 150ms ease-in-out, opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        -moz-transition: -moz-transform 150ms ease-in-out, opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        -o-transition: -o-transform 150ms ease-in-out, opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        transition: transform 150ms ease-in-out, opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+    }
+    .sidebar-menu .main-menu li.has-sub.opened > a:before,
+    .sidebar-menu .main-menu li.has-sub.expanded > a:before {
+        -webkit-transform: translateY(-50%) rotate(0deg);
+        -moz-transform: translateY(-50%) rotate(0deg);
+        -o-transform: translateY(-50%) rotate(0deg);
+        -ms-transform: translateY(-50%) rotate(0deg);
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    .sidebar-menu.collapsed .main-menu > li.has-sub > a:before {
+        opacity: 0;
+    }
+    .sidebar-menu:not(.collapsed) .main-menu > li.has-sub > a:before {
+        opacity: 1;
+    }
+
+    /* Badges */
+    .sidebar-menu.collapsed .hidden-collapsed {
+        display: inline-block !important;
+        opacity: 0;
+    }
+    .sidebar-menu:not(.collapsed) .hidden-collapsed {
+        opacity: 1;
+        -webkit-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        -moz-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        -o-transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+        transition: opacity 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+    }
+
+    /* Labels always visible */
+    .sidebar-menu.collapsed .main-menu > li > a > span.label {
+        display: block !important;
+        position: absolute;
+        right: 0; top: 0;
+        opacity: 1;
+    }
+    .sidebar-menu:not(.collapsed) .main-menu > li > a > span.label { opacity: 1; }
+}

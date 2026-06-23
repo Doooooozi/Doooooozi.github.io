@@ -58,7 +58,7 @@
 <body class="page-body">
     <!-- skin-white -->
     <div class="page-container">
-        <div class="sidebar-menu toggle-others fixed">
+        <div class="sidebar-menu toggle-others fixed collapsed">
             <div class="sidebar-menu-inner">
                 <header class="logo-env">
                     <!-- logo -->
@@ -111,7 +111,6 @@
                             <li>
                                 <a href="#网页灵感" class="smooth">
                                     <span class="title">网页灵感</span>
-                                    <span class="label label-pink pull-right hidden-collapsed">Hot</span>
                                 </a>
                             </li>
                             <!-- <li>
@@ -4102,6 +4101,35 @@
     <!-- JavaScripts initializations and stuff -->
     <script src="../assets/js/xenon-custom.js"></script>
     <script src="../assets/js/lozad.js"></script>
+    <script>
+    (function($) {
+        var $sidebar = $('.sidebar-menu');
+        var timer = null;
+        if (!$sidebar.length) return;
+        function isDesktop() { return $(window).width() >= 768; }
+        $sidebar.on('mouseenter', function() {
+            if ($sidebar.hasClass('collapsed') && isDesktop()) {
+                clearTimeout(timer);
+                $sidebar.removeClass('collapsed');
+                timer = setTimeout(function() {
+                    if (typeof ps_init === 'function') ps_init();
+                    $(window).trigger('xenon.resize');
+                }, 420);
+            }
+        });
+        $sidebar.on('mouseleave', function() {
+            if (!$sidebar.hasClass('collapsed') && isDesktop()) {
+                clearTimeout(timer);
+                if (typeof ps_destroy === 'function') ps_destroy();
+                $sidebar.find('.has-sub.expanded').removeClass('expanded opened').children('ul').hide();
+                timer = setTimeout(function() {
+                    $sidebar.addClass('collapsed');
+                    setTimeout(function() { $(window).trigger('xenon.resize'); }, 420);
+                }, 150);
+            }
+        });
+    })(jQuery);
+    </script>
 </body>
 
 </html>
