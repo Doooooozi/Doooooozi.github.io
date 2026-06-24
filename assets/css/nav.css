@@ -1,10 +1,9 @@
 .box2 {
     height: 86px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 10px;
     padding: 0px 30px 0px 30px;
     background-color: #fff;
-    border-radius: 4px;
     border: 1px solid #e4ecf3;
     margin: 20px 0 0 0;
     -webkit-transition: all 0.3s ease;
@@ -254,4 +253,212 @@
         opacity: 1;
     }
     .sidebar-menu:not(.collapsed) .main-menu > li > a > span.label { opacity: 1; }
+}
+
+/* ============================================================
+   CARD GRID — content page
+   ============================================================ */
+
+/* Outer white frame (matches sidebar bg) */
+html, body {
+    height: 100%;
+    min-width: 769px;
+    overflow-x: auto;
+}
+.page-container {
+    height: 100%;
+    min-width: 769px;
+}
+.main-content {
+    position: relative;
+    background: #FFFFFF !important;
+    padding: 16px;
+    padding-left: 0;
+}
+
+/* Inner content box (fixed to viewport, follows sidebar width) */
+.content-inner {
+    position: fixed;
+    top: 16px;
+    bottom: 16px;
+    left: 80px;
+    right: 16px;
+    background: #F1F5F8;
+    border-radius: 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: left 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+}
+
+/* Shadow mask — absolute overlay on top of content-inner, below sidebar-navbar */
+.shadow-mask {
+    position: fixed;
+    top: 16px;
+    bottom: 16px;
+    left: 80px;
+    right: 16px;
+    pointer-events: none;
+    z-index: 99;
+    border-radius: 16px;
+    transition: left 0.4s cubic-bezier(0.33, 0, 0.1, 1);
+    box-shadow:
+        inset 2px 2px 6px 0px rgba(0, 36, 100, 0.02),
+        inset 8px 8px 16px 0px rgba(0, 36, 100, 0.02),
+        inset 16px 16px 32px 0px rgba(0, 36, 100, 0.01) !important;
+}
+
+@media (min-width: 768px) {
+    .sidebar-menu:not(.collapsed) ~ .main-content .content-inner,
+    .sidebar-menu:not(.collapsed) ~ .main-content .shadow-mask {
+        left: 206.5px;
+    }
+}
+
+/* Touchpad-style auto-hide scrollbar — WebKit */
+.content-inner::-webkit-scrollbar {
+    width: 6px;
+}
+.content-inner::-webkit-scrollbar-track {
+    background: transparent;
+}
+.content-inner::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 3px;
+    -webkit-transition: background 0.4s ease;
+    transition: background 0.4s ease;
+}
+.content-inner.scrolling::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/* Navbar: no extra margin */
+.content-inner .navbar.user-info-navbar {
+    margin: 0;
+}
+
+/* Section title: same width as card grid */
+.content-inner h4,
+.content-inner .text-gray {
+    max-width: var(--card-container-width, 786px);
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 24px 0 20px;
+}
+
+/* Card container — width defined by max columns at current screen width */
+.content-inner .row {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 18px 24px;
+    justify-content: flex-start;
+    max-width: var(--card-container-width, 786px);
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Override Bootstrap col-sm-* inside card flex container */
+.content-inner .row > [class*="col-"] {
+    flex: 0 0 246px;
+    width: 246px !important;
+    max-width: 246px !important;
+    float: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Remove card's own top margin (grid gap handles spacing) */
+.content-inner .row .box2 {
+    margin-top: 0 !important;
+}
+
+/* Hide <br> spacers between sections */
+.main-content br {
+    display: none;
+}
+
+/* Kill Bootstrap clearfix pseudo-elements (become grid items otherwise) */
+.content-inner .row::before,
+.content-inner .row::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* ==========================================
+   1. 背景色与顶部边框 (加在最外层 footer 上)
+   ========================================== */
+.content-inner .main-footer {
+    background-color: #EBF0F5;
+    border-top: 1px solid #D9E3EA;
+    margin: 28px 0 0 0 !important;
+    padding: 0 !important;
+}
+
+/* ==========================================
+   2. 内部 Flex 布局与安全距离重置
+   ========================================== */
+.content-inner .footer-inner {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin: 0 24px !important;
+    padding: 20px 0 !important;
+}
+
+/* ==========================================
+   3. 干掉导致无法贴边的幽灵伪元素
+   ========================================== */
+.content-inner .main-footer::before,
+.content-inner .main-footer::after,
+.content-inner .footer-inner::before,
+.content-inner .footer-inner::after {
+    display: none !important;
+}
+
+/* ==========================================
+   4. 子元素间距清零 + 复位
+   ========================================== */
+.content-inner .footer-inner .footer-text,
+.content-inner .footer-inner .go-up {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.content-inner .footer-text {
+    float: none !important;
+}
+.content-inner .go-up {
+    float: none !important;
+}
+
+/* ==========================================
+   Tooltip — glassmorphism
+   ========================================== */
+.tooltip {
+    opacity: 0 !important;
+    transform: translateY(4px) !important;
+    transition: opacity 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+.tooltip.in,
+.tooltip.show {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+.tooltip-inner {
+    background: rgba(40, 40, 40, 0.75) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+}
+.tooltip.top .tooltip-arrow {
+    border-top-color: rgba(40, 40, 40, 0.75) !important;
+}
+.tooltip.bottom .tooltip-arrow {
+    border-bottom-color: rgba(40, 40, 40, 0.75) !important;
+}
+.tooltip.left .tooltip-arrow {
+    border-left-color: rgba(40, 40, 40, 0.75) !important;
+}
+.tooltip.right .tooltip-arrow {
+    border-right-color: rgba(40, 40, 40, 0.75) !important;
 }
