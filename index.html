@@ -1,79 +1,116 @@
 <!DOCTYPE html>
-<html lang="zh">
-
+<html lang="zh-CN">
 <head>
-    <link rel="shortcut icon" href="./assets/images/favicon.png">
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    
-    <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?c05bb16ea908292af9f6c513087a1cc3";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-    </script>
-    <script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-8550836177608334",
-        enable_page_level_ads: true
-    });
-    </script>
-    <meta charset="UTF-8">
-    <title>WebStack.cc - 设计师网址导航</title>
-    <script>
-    if (navigator.appName == "Netscape") {
-        var language = navigator.language;
-    } else {
-        var language = navigator.browserLanguage;
-
-    }
-
-    if (language.indexOf("en") > -1) {
-        document.location.href = "cn/index.html";
-    } else if (language.indexOf("zh") > -1) {
-        document.location.href = "cn/index.html";
-    } else {
-        document.location.href = "cn/index.html";
-
-    }
-    </script>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="viggo" />
-    <title>WebStack.cc - Collection of resources and tools for Designers</title>
-    <meta name="keywords" content="Doooooozi - 私用导航站">
-    <meta name="description" content="Doooooozi - 私用导航站">
-    
-    <!-- / FB Open Graph -->
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="https://doooooozi.github.io/">
-    <meta property="og:title" content="Doooooozi - 私用导航站">
-    <meta property="og:description" content="Doooooozi - 私用导航站">
-    <meta property="og:image" content="http://www.webstack.cc/assets/images/webstack_banner_cn.png">
-    <meta property="og:site_name" content="Doooooozi - 私用导航站">
-    <!-- / Twitter Cards -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Doooooozi - 私用导航站">
-    <meta name="twitter:description" content="Doooooozi - 私用导航站">
-    <meta name="twitter:image" content="http://www.webstack.cc/assets/images/webstack_banner_cn.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的极简导航</title>
+  
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+  
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
-
 <body>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111463289-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-box">LOGO</div>
+    </div>
+    
+    <div class="sidebar-scroll-wrapper">
+      <div class="nav-mask-top"><div class="mask-blur"></div><div class="mask-tint"></div></div> 
+      <nav class="sidebar-content">
+        <div class="nav-menu">
+          <div class="active-highlight" id="highlightBox"></div>
+          
+          <a href="#section1" class="nav-item active" aria-current="page">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录1</span>
+          </a>
+          <a href="#section2" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录2</span>
+          </a>
+          <a href="#section3" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录3</span>
+          </a>
+          <a href="#section4" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录4</span>
+          </a>
+          <a href="#section5" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录5</span>
+          </a>
+          <a href="#section6" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录6</span>
+          </a>
+          <a href="#section7" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录7</span>
+          </a>
+          <a href="#section8" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录8</span>
+          </a>
+          <a href="#section9" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录9</span>
+          </a>
+          <a href="#section10" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录10</span>
+          </a>
+          <a href="#section11" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录11</span>
+          </a>
+          <a href="#section12" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录12</span>
+          </a>
+          <a href="#section13" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录13</span>
+          </a>
+          <a href="#section14" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录14</span>
+          </a>
+          <a href="#section15" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录15</span>
+          </a>
+          <a href="#section16" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录16</span>
+          </a>
+          <a href="#section17" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录17</span>
+          </a>
+          <a href="#section18" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录18</span>
+          </a>
+          <a href="#section19" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录19</span>
+          </a>
+          <a href="#section20" class="nav-item">
+            <div class="icon-wrapper">svg</div><span class="text">分类目录20</span>
+          </a>
+        </div>
+      </nav>
+      <div class="nav-mask-bottom"><div class="mask-blur"></div><div class="mask-tint"></div></div> 
+    </div>
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
+    <div class="sidebar-footer">
+      <div class="footer-module-1">
+        <a href="#" class="footer-action-item"><div class="icon-wrapper">icon</div><span class="text">文本文本</span></a>
+        <div class="footer-divider"></div>
+        <a href="#" class="footer-action-item"><div class="icon-wrapper">icon</div><span class="text">文本文本</span></a>
+        <div class="footer-divider"></div>
+        <a href="#" class="footer-action-item"><div class="icon-wrapper">icon</div><span class="text">文本文本</span></a>
+      </div>
+      <div class="dark-banner">
+        <div class="db-collapsed"><div class="db-icon">icon</div><div class="db-line-h"></div><div class="db-text-stack"><span>文本</span><span>文本</span></div></div>
+        <div class="db-expanded"><div class="db-icon">icon</div><div class="db-line-v"></div><div class="db-text-row">文本文本</div></div>
+      </div>
+      <div class="share-module">
+        <div class="share-collapsed"><div class="s-icon">icon</div></div>
+        <div class="share-expanded"><div class="s-mini-icon">1</div><div class="s-mini-icon">2</div><div class="s-mini-icon">3</div><div class="s-mini-icon">4</div><div class="s-mini-icon">5</div><div class="s-mini-icon">6</div><div class="s-mini-icon">7</div><div class="s-mini-icon">8</div></div>
+      </div>
+      <div class="pin-module">
+        <div class="pin-btn" id="pinBtn"><div class="p-icon">固定</div></div>
+      </div>
+    </div>
+  </aside>
 
-    gtag('config', 'UA-111463289-1');
-    </script>
+  <main style="flex: 1; height: 100vh; background-color: #f5f5f5;">
+  </main>
+
+  <script src="./assets/js/main.js" defer></script>
 </body>
-
 </html>
