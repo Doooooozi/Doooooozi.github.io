@@ -51,36 +51,6 @@
           <a href="#section10" class="nav-item">
             <div class="icon-wrapper">svg</div><span class="text">分类目录10</span>
           </a>
-          <a href="#section11" class="nav-item">
-            <div class="icon-wrapper">svg</div><span class="text">分类目录11</span>
-          </a>
-          <a href="#section12" class="nav-item">
-            <div class="icon-wrapper">svg</div><span class="text">分类目录12</span>
-          </a>
-          <a href="#section13" class="nav-item">
-            <div class="icon-wrapper">svg</div><span class="text">分类目录13</span>
-          </a>
-          <a href="#section14" class="nav-item">
-            <div class="icon-wrapper">svg</div><span class="text">分类目录14</span>
-          </a>
-          <a href="#section15" class="nav-item">
-            <div class="icon-wrapper">svg</div><span class="text">分类目录15</span>
-          </a>
-          <a href="#section16" class="nav-item">
-            <div class="icon-wrapper">svg</div><span class="text">分类目录16</span>
-          </a>
-          <a href="#section17" class="nav-item">
-            <div class="icon-wrapper">svg</div><span class="text">分类目录17</span>
-          </a>
-          <a href="#section18" class="nav-item">
-            <div class="icon-wrapper">svg</div><span class="text">分类目录18</span>
-          </a>
-          <a href="#section19" class="nav-item">
-            <div class="icon-wrapper">svg</div><span class="text">分类目录19</span>
-          </a>
-          <a href="#section20" class="nav-item">
-            <div class="icon-wrapper">svg</div><span class="text">分类目录20</span>
-          </a>
         </div>
       </nav>
       <div class="nav-mask-bottom"><div class="mask-blur"></div><div class="mask-tint"></div></div> 
@@ -108,7 +78,46 @@
     </div>
   </aside>
 
-  <main style="flex: 1; height: 100vh; background-color: #f5f5f5;">
+  <main class="main-content" id="mainContent">
+    <header class="content-header">
+      <div class="hollow-bg-text">DOOOZZZI</div>
+      <div class="header-content">内容页 header</div>
+    </header>
+
+    <div class="custom-scrollbar" id="customScrollbar">
+      <div class="custom-thumb" id="customThumb"></div>
+    </div>
+
+    <div class="scrollable-body" id="scrollableBody">
+      <div class="content-container">
+        
+        <script>
+          for(let i=1; i<=10; i++) {
+            document.write(`
+              <section class="category-section" id="section${i}">
+                <h2 class="category-title"># 分类目录${i}</h2>
+                <div class="card-grid">
+                  <a href="#" class="site-card" target="_blank">
+                    <div class="card-header"><div class="site-logo"><span class="logo-placeholder">logo</span></div><h3 class="site-name">Figma</h3></div>
+                    <div class="site-desc">这是一款基于浏览器的协同设计工具，大厂设计师都在使用的高效神器。</div>
+                  </a>
+                  <a href="#" class="site-card" target="_blank">
+                    <div class="card-header"><div class="site-logo"></div><h3 class="site-name">站点名一行截断测试超长文本</h3></div>
+                    <div class="site-desc">文本描述两行截断文本描述两行截断文本描述两行截断文本描述两行截断。</div>
+                  </a>
+                  <a href="#" class="site-card" target="_blank"><div class="card-header"><div class="site-logo"></div><h3 class="site-name">卡片3</h3></div><div class="site-desc">占位内容</div></a>
+                  <a href="#" class="site-card" target="_blank"><div class="card-header"><div class="site-logo"></div><h3 class="site-name">卡片4</h3></div><div class="site-desc">占位内容</div></a>
+                  <a href="#" class="site-card" target="_blank"><div class="card-header"><div class="site-logo"></div><h3 class="site-name">卡片5</h3></div><div class="site-desc">占位内容</div></a>
+                </div>
+              </section>
+            `);
+          }
+        </script>
+
+      </div>
+    </div>
+
+    <footer class="content-footer">内容页 Footer</footer>
   </main>
 
   <script src="./assets/js/main.js" defer></script>

@@ -1,34 +1,17 @@
 /* =========================================
    💡 本地字体引入：MiSans 家族
    ========================================= */
-@font-face {
-  font-family: 'MiSans';
-  src: url('./fonts/MiSans/MiSans-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap; 
-}
-@font-face {
-  font-family: 'MiSans';
-  src: url('./fonts/MiSans/MiSans-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'MiSans';
-  src: url('./fonts/MiSans/MiSans-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+@font-face { font-family: 'MiSans'; src: url('./fonts/MiSans/MiSans-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: 'MiSans'; src: url('./fonts/MiSans/MiSans-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+@font-face { font-family: 'MiSans'; src: url('./fonts/MiSans/MiSans-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
 
 /* --- 页面基础环境重置 --- */
 body {
   margin: 0;
   background-color: #1a1a1a;
   font-family: 'MiSans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  display: flex;
+  /* 取消 flex，改为相对定位基座 */
+  position: relative;
 }
 
 :root {
@@ -39,21 +22,34 @@ body {
   --mask-height: 40px;      
 }
 
+/* 🌟 核心修复 1：Sidebar 浮层化 (固定在左侧，层级极高) */
 .sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  z-index: 1000; /* 保证悬浮在 Main 之上 */
   width: var(--sidebar-collapsed-width);
   height: 100vh;
   background-color: #ffffff;
   display: flex;
   flex-direction: column; 
-  transition: width 0.3s var(--transition-curve);
+  /* 加上 box-shadow 的过渡动画，展开时更丝滑 */
+  transition: width 0.3s var(--transition-curve), box-shadow 0.3s var(--transition-curve);
   overflow: hidden;
+  
+  /* 👇 换成大厂质感阴影：默认收起态就存在，分近景和远景两层弥散 */
+  box-shadow: 
+    2px 0 8px rgba(0, 0, 0, 0.02), 
+    8px 0 24px rgba(0, 0, 0, 0.02);
 }
 
 .sidebar:hover,
 .sidebar.is-pinned {
   width: var(--sidebar-expanded-width);
+  /* 👇 展开时，因为浮层面积变大，阴影的扩散半径也顺势加大一点点 */
+  box-shadow: 
+    4px 0 12px rgba(0, 0, 0, 0.02), 
+    12px 0 32px rgba(0, 0, 0, 0.02);
 }
-
 .sidebar-header { flex-shrink: 0; padding: 12px 0 0 9px; display: flex; }
 .logo-box { width: 52px; height: 52px; min-width: 52px; flex-shrink: 0; background-color: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; }
 
@@ -68,52 +64,37 @@ body {
 .nav-mask-top, .nav-mask-bottom { position: absolute; left: 0; right: 0; height: var(--mask-height); z-index: 10; pointer-events: none; }
 .nav-mask-top { top: 0; }
 .nav-mask-bottom { bottom: 0; }
-
 .nav-mask-top .mask-blur { position: absolute; inset: 0; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); transform: translateZ(0); }
 .nav-mask-bottom .mask-blur { position: absolute; inset: 0; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); transform: translateZ(0); }
-
 .nav-mask-top .mask-tint { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
 .nav-mask-bottom .mask-tint { position: absolute; inset: 0; background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
 
 /* =========================================
-   ✨ 主导航列表与高亮滑块 (原汁原味纯净版)
+   ✨ 主导航列表与高亮滑块
    ========================================= */
 .active-highlight { 
   position: absolute; top: 0; left: 0; 
   width: calc(100% - 14px); height: var(--item-height); 
   background-color: #E6E6E6; z-index: 0; 
-  /* 🌟 核心修复：补上宽度的丝滑过渡，跟随侧边栏伸缩 */
-  transition: width 0.3s var(--transition-curve);
+  /* 🌟 核心修复 2：硬编码死锁第一帧坐标 40px，彻底消灭 F5 刷新飞入 Bug */
+  transform: translateY(40px);
+  /* 初始状态拔掉 transition，完全由 JS 控制 */
 }
-.active-highlight::before { 
-  content: ''; position: absolute; left: 0; top: 0; 
-  width: 7px; height: 100%; background-color: #000; 
-}
+.active-highlight::before { content: ''; position: absolute; left: 0; top: 0; width: 7px; height: 100%; background-color: #000; }
 
 .nav-item { position: relative; z-index: 1; display: flex; align-items: center; height: var(--item-height); padding: 0 14px; cursor: pointer; white-space: nowrap; text-decoration: none; color: #333; margin-bottom: 2px; background-color: transparent; }
 .nav-item::before { content: ''; position: absolute; left: 14px; right: 14px; top: 0; height: 100%; background-color: transparent; z-index: -1; transition: background-color 0.2s; }
 .nav-item:hover::before { background-color: #E6E6E6; }
 .nav-item.active:hover::before { background-color: transparent; }
-
-.icon-wrapper { 
-  flex-shrink: 0; width: 28px; height: 28px; background-color: #e0e0e0; 
-  display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; margin-left: 7px; 
-  transition: all 0.3s var(--transition-curve); 
-}
+.icon-wrapper { flex-shrink: 0; width: 28px; height: 28px; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; margin-left: 7px; transition: all 0.3s var(--transition-curve); }
 .active .icon-wrapper { background-color: #000; color: #fff; }
-
-.text { 
-  margin-left: 14px; font-size: 14px; opacity: 0; 
-  transition: opacity 0.2s var(--transition-curve); 
-}
+.text { margin-left: 14px; font-size: 14px; opacity: 0; transition: opacity 0.2s var(--transition-curve); }
 .sidebar:hover .text, .sidebar.is-pinned .text { opacity: 1; transition-delay: 0.1s; }
 
 /* =========================================
-   🟢 尾巴 (Footer) - 极简功能模块
+   🟢 尾巴 (Footer)
    ========================================= */
 .sidebar-footer { flex-shrink: 0; display: flex; flex-direction: column; width: 100%; box-sizing: border-box; }
-
-/* 💡 模块1：操作列 */
 .footer-module-1 { margin: 0 14px 0 14px; width: 42px; height: 110px; background-color: #F2F2F2; border-radius: 4px; transition: width 0.3s var(--transition-curve); overflow: hidden; display: flex; flex-direction: column; }
 .sidebar:hover .footer-module-1, .sidebar.is-pinned .footer-module-1 { width: calc(100% - 28px); }
 .footer-action-item { display: flex; align-items: center; height: 36px; padding: 0 7px; cursor: pointer; text-decoration: none; color: #333; width: 100%; box-sizing: border-box; transition: background-color 0.2s ease; }
@@ -123,33 +104,22 @@ body {
 .sidebar:hover .footer-action-item .text, .sidebar.is-pinned .footer-action-item .text { opacity: 1; transition-delay: 0.1s; }
 .footer-divider { height: 1px; background-color: #EBEBEB; margin: 0 7px; flex-shrink: 0; }
 
-/* 💡 模块2 (黑金广告牌 - 红白高定版) */
 .dark-banner { margin: 18px 14px 0 14px; background-color: #1a1a1a; border-radius: 4px; position: relative; overflow: hidden; cursor: pointer; height: 92px; transition: all 0.3s var(--transition-curve); }
 .sidebar:hover .dark-banner, .sidebar.is-pinned .dark-banner { height: 44px; }
-/* 1. 悬停背景变红 */
 .dark-banner:hover { background-color: #FF4730; }
-
 .db-collapsed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 7px; color: #fff; opacity: 1; transition: opacity 0.2s; pointer-events: none; }
 .db-collapsed .db-icon { width: 28px; height: 28px; background: #333; display: flex; align-items: center; justify-content: center; font-size: 10px; transition: background 0.3s ease; }
-/* 2. 悬停时图标底色变为半透明白，完美融入红色背景，里面的 SVG 天然保持白色 */
 .dark-banner:hover .db-collapsed .db-icon { background: rgba(255,255,255,1); }
-/* 3. 分割线天然就是白色半透明，删掉变黑代码保持原样 */
 .db-line-h { width: 28px; height: 1px; background: rgba(255,255,255,0.2); margin: 4px 0 12px 0; }
 .db-text-stack { display: flex; flex-direction: column; align-items: center; font-size: 12px; gap: 2px; }
-
 .db-expanded { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: row; align-items: center; padding: 0 7px; box-sizing: border-box; color: #fff; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
 .sidebar:hover .db-collapsed, .sidebar.is-pinned .db-collapsed { opacity: 0; }
 .sidebar:hover .db-expanded, .sidebar.is-pinned .db-expanded { opacity: 1; }
-
 .db-expanded .db-icon { width: 28px; height: 28px; flex-shrink: 0; background: #333; display: flex; align-items: center; justify-content: center; font-size: 10px; transition: background 0.3s ease; }
-/* 图标底色变为半透明白 */
 .dark-banner:hover .db-expanded .db-icon { background: rgba(255,255,255,0.2); }
-/* 分割线保持白色半透明 */
 .db-line-v { width: 1px; height: 16px; background: rgba(255,255,255,0.2); margin: 0 14px; flex-shrink: 0; }
-/* 文本天然保持 #fff 白色 */
 .db-text-row { flex: 1; display: flex; justify-content: center; font-size: 14px; white-space: nowrap; font-weight: 500; }
 
-/* 💡 模块3：分享矩阵 */
 .share-module { margin: 18px 14px 0 14px; position: relative; width: 42px; height: 26px; background-color: #E6E6E6; border-radius: 2px; transition: width 0.3s var(--transition-curve); overflow: hidden; }
 .sidebar:hover .share-module, .sidebar.is-pinned .share-module { width: calc(100% - 28px); }
 .share-collapsed { position: absolute; left: 0; top: 0; width: 42px; height: 100%; display: flex; align-items: center; justify-content: center; opacity: 1; transition: opacity 0.2s; }
@@ -160,8 +130,207 @@ body {
 .s-mini-icon { width: 14px; height: 14px; background-color: #B3B3B3; border-radius: 2px; color: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s ease; }
 .s-mini-icon:hover { background-color: #000000; }
 
-/* 💡 模块4：固定面板 */
 .pin-module { position: relative; margin: 12px 14px 12px 14px; height: var(--item-height); background: transparent; }
 .pin-btn { position: absolute; right: 0; width: 42px; height: 100%; display: flex; align-items: center; justify-content: center; cursor: pointer; background-color: transparent; }
 .pin-btn .p-icon { width: 24px; height: 24px; background-color: #e0e0e0; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; transition: background-color 0.3s ease, color 0.3s ease; }
 .pin-btn:hover .p-icon { background-color: #000000; color: #ffffff; }
+
+/* =========================================
+   🌟 右侧主内容区 (Main Content)
+   ========================================= */
+/* 🌟 修复 1：将响应式容器基准上移给主内容区 */
+.main-content {
+  margin-left: var(--sidebar-collapsed-width);
+  width: calc(100% - var(--sidebar-collapsed-width));
+  height: 100vh;
+  background-color: #FFFFFF; 
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* 👇 新增：让这里的 main-content 统领全局宽度计算 */
+  container-type: inline-size; 
+}
+
+/* --- 走查用的 Header & Footer --- */
+.content-header, .content-footer {
+  width: 100%; height: 100px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'MiSans', sans-serif; font-size: 14px; font-weight: 600; color: #191919;
+  flex-shrink: 0; background-color: #FFFFFF; z-index: 10;
+}
+/* 👇 给 Header 加相对定位和溢出隐藏，用来关住那个巨大的背景字 */
+.content-header { 
+  position: relative; 
+  overflow: hidden; 
+  border-bottom: 1px solid rgba(237, 237, 240, 0.7); 
+}
+.content-footer { border-top: 1px solid rgba(237, 237, 240, 0.7); margin-top: auto; }
+
+/* 保证 Header 里的真实内容浮在文字之上 */
+.header-content { position: relative; z-index: 2; }
+
+/* =========================================
+   🌟 终极还原：镂空条纹渐隐字 (响应式 + 宽字体)
+   ========================================= */
+
+/* 1. 如果你有这个字体文件，可以像这样引入（没有也没关系，下面有降级方案） */
+@font-face {
+  font-family: 'MonumentExtended-Ultrabold';
+  /* 替换成你实际的字体路径 */
+  src: url('./fonts/Monument-Extended/MonumentExtended-Ultrabold.woff2') format('woff2'); 
+  font-weight: 700;
+  font-display: block;
+}
+
+.hollow-bg-text {
+  position: absolute;
+  /* 🌟 核心修复：使用 vw/vh 相对单位，保证不同屏幕下位置比例不变 */
+  top: -2vh;     
+  left: 2vw;     
+  z-index: 1;
+  user-select: none;     
+  pointer-events: none;  
+  white-space: nowrap;
+  
+  /* 🌟 字体定制：优先用原版字体，如果没有，则降级为 Impact 或 Arial Black（极宽极粗） */
+  font-family: 'MonumentExtended-Ultrabold', Impact, 'Arial Black', sans-serif;
+  font-weight: 900;      
+  
+  /* 🌟 核心逻辑：最小值 16px，理想值 13vw，最大值 160px */
+  font-size: clamp(200px, 16vw, 300px);     
+  line-height: 1;
+  /* 同样建议把字间距也限制一下，避免极端比例下间距崩塌 */
+  letter-spacing: clamp(-2px, 0.2vw, 2px);
+
+  /* 条纹背景保持不变 */
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; 
+  
+  /* 消散蒙版保持不变 */
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%);
+}
+.content-footer { border-top: 1px solid rgba(237, 237, 240, 0.7); margin-top: auto; }
+
+/* 🌟 修复 2：神级 CSS 定位，精准跟踪动态网格右侧 34px */
+.custom-scrollbar {
+  position: absolute;
+  top: 100px; 
+  bottom: 100px; 
+  /* 核心定位算法：容器中心(50%) + 当前网格一半宽度 + 34px固定间距 */
+  /* 默认 5 张卡最大宽度 1208，一半是 604。604 + 34 = 638 */
+  left: calc(50% + 638px); 
+  width: 6px;
+  z-index: 99;
+  pointer-events: none;
+  /* 增加 left 属性的过渡，在屏幕跳变缩放时，滚动条能丝滑飘过去 */
+  transition: left 0.3s var(--transition-curve);
+}
+
+/* 与卡片网格完全一致的阶梯断点，精准同步跳变 */
+@container (max-width: 1367px) {
+  /* 4 张卡宽 962，一半是 481。481 + 34 = 515 */
+  .custom-scrollbar { left: calc(50% + 515px); } 
+}
+@container (max-width: 1121px) {
+  /* 3 张卡宽 716，一半是 358。358 + 34 = 392 */
+  .custom-scrollbar { left: calc(50% + 392px); } 
+}
+@container (max-width: 875px) {
+  /* 2 张卡宽 470，一半是 235。235 + 34 = 269 */
+  .custom-scrollbar { left: calc(50% + 269px); } 
+}
+
+.custom-thumb {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  opacity: 0; 
+  transition: opacity 0.4s ease; 
+}
+.custom-scrollbar.is-active .custom-thumb {
+  opacity: 1; /* 滚动时渐显 */
+}
+
+/* 中部核心滚动区域 */
+.scrollable-body {
+  flex: 1;
+  overflow-y: auto;
+  /* 👇 删掉了这里的 container-type */
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+}
+.scrollable-body::-webkit-scrollbar { display: none; }
+
+.content-container {
+  box-sizing: border-box; margin: 0 auto;
+  padding: 80px 80px 120px 80px; width: 100%;
+}
+.category-section { width: max-content; margin: 0 auto 60px auto; }
+.category-title { font-family: 'MiSans', sans-serif; font-weight: 600; font-size: 16px; color: #191919; line-height: 1.5; margin: 0 0 36px 0; }
+
+.card-grid { display: grid; gap: 22px; grid-template-columns: repeat(5, 224px); }
+@container (max-width: 1367px) { .card-grid { grid-template-columns: repeat(4, 224px); } }
+@container (max-width: 1121px) { .card-grid { grid-template-columns: repeat(3, 224px); } }
+@container (max-width: 875px) { .card-grid { grid-template-columns: repeat(2, 224px); } }
+
+/* 🟠 卡片 UI 物理参数 */
+.site-card {
+  box-sizing: border-box;
+  width: 224px;
+  height: 112px; 
+  padding: 16px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  position: relative; /* 🌟 必须加：为了定位底部的 4px 黑线 */
+  overflow: hidden; /* 🌟 必须加：为了裁切底部黑线的下圆角 */
+  
+  /* 🌟 完全复刻你提取的参数：0 8px 8px 10%透明度黑色 */
+  /* (这里用 box-shadow 替代 filter，视觉100%一样且能开启GPU硬件加速不卡顿) */
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s var(--transition-curve), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 🌟 完美的底部 4px 描边：顶部绝对直角，底部完美 2px 圆角 */
+.site-card::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 4px;
+  background-color: #000000;
+  transition: background-color 0.3s var(--transition-curve);
+}
+
+.site-card:hover {
+  /* 悬停平滑上浮 8px (对应他代码里的 -0.5rem) */
+  transform: translateY(-8px); 
+  /* 悬停时阴影稍作扩大，更符合物理世界的真实光影，如果你想完全跟他一样不变，删掉这行即可 */
+  box-shadow: 0px 12px 16px rgba(0, 0, 0, 0.12);
+}
+
+.site-card:hover::after {
+  /* 悬停底边平滑变红 */
+  background-color: #FF4730;
+}
+
+.card-header { display: flex; align-items: center; margin-bottom: 12px; gap: 12px; }
+.site-logo {
+  width: 32px; height: 32px; background-color: #D9D9D9; border-radius: 2px; box-sizing: border-box;
+  box-shadow: inset 0 0 0 1px rgba(237, 237, 240, 0.7); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; overflow: hidden;
+}
+.logo-placeholder { font-size: 8px; color: #999; text-align: center; line-height: 1; }
+.site-name { margin: 0; font-family: 'MiSans', sans-serif; font-weight: 600; font-size: 14px; color: #191919; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.site-desc { margin: 0; font-family: 'MiSans', sans-serif; font-weight: 400; font-size: 12px; color: #575757; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
