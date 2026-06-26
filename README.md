@@ -34,7 +34,7 @@
 
 ## 📁 目录结构 (Structure)
 
-\`\`\`text
+```text
 my-nav-site/
 ├── assets/
 │   ├── css/
@@ -48,7 +48,6 @@ my-nav-site/
 │       └── main.js          # 物理滚动引擎与事件交互核心逻辑
 ├── index.html               # 站点主骨架与留白容器
 └── README.md                # 项目架构与规范说明
-\`\`\`
 
 ## 🚀 部署指南 (Deployment)
 
