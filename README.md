@@ -6,6 +6,12 @@
 
 - **极致流畅 (Butter Smooth)**：内嵌 Lenis 平滑阻尼引擎，提供 60fps 原生级物理滚动体验。
 - **光学级毛玻璃 (Progressive Blur)**：使用 CSS `mask-image` 实现硬件加速的渐进式毛玻璃遮罩，完美还原顶级视觉质感，告别渲染黑块。
+- **DOM 降维隔离术 (Layer Decoupling)**：彻底解决 WebKit 引擎下 `mask-image` 与 `background-clip: text` 的底层死锁 Bug。采用父级 Alpha 通道消散与子级纹理裁切物理隔离，实现最纯净的文本镂空渐隐。
+- **无限波浪履带引擎 (Staggered Wave Marquee)**：
+  - **视觉障眼法**：基于 `50% Loop` 的双重/多重分身节点拼接，配合强硬的 `flex-shrink: 0` 刚体护盾，实现 4K 宽屏下严丝合缝的无限滚动。
+  - **矩阵波浪**：通过 JS 在微秒级将文本碾碎解构为独立 DOM，注入 CSS 变量 `--i` 生成精准的延迟序列（Staggered Delay），触发大厂级的 hover 波浪翻转动效。
+- **三明治渲染架构 (Sandwich Architecture)**：针对复杂悬浮组件（如 Back-To-Top 按钮），采用“底盘毛玻璃刚体 + 中层 GPU 匀速旋转履带 + 顶层绝对静止轴心”的 3 层独立渲染结界，杜绝 SVG 内部 `<foreignObject>` 引起的 Safari 渲染崩溃与边缘裁切。
+- **全局物理垫片联动**：通过 CSS `:root` 变量引擎（如 `--main-spacer-top`），实现页面留白间距与毛玻璃透镜高度的纳米级自动咬合，告别断层。
 - **智能滚动吸附与追踪**：侧边栏选中态使用 `transform` 动态追踪坐标（物理滑块），并实现双向 Scroll-spy 联动，杜绝重排 (Reflow) 性能损耗。
 - **事件委托架构**：导航点击事件采用 O(1) 级绑定，支持无限量分类节点扩展，内存占用极低。
 - **零构建工具 (Zero Build)**：标准静态目录结构，开箱即用，秒级部署。
@@ -46,7 +52,7 @@ my-nav-site/
 │   └── js/
 │       ├── config.js        # (Planned for Lv.2) 核心数据配置表
 │       └── main.js          # 物理滚动引擎与事件交互核心逻辑
-├── index.html               # 站点主骨架与留白容器
+├── index.html               # 站点主骨架与交互容器
 └── README.md                # 项目架构与规范说明
 ```
 

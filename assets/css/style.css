@@ -10,7 +10,6 @@ body {
   margin: 0;
   background-color: #1a1a1a;
   font-family: 'MiSans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  /* 取消 flex，改为相对定位基座 */
   position: relative;
 }
 
@@ -19,24 +18,24 @@ body {
   --sidebar-expanded-width: 240px; 
   --transition-curve: cubic-bezier(0.4, 0, 0.2, 1); 
   --item-height: 44px;      
-  --mask-height: 40px;      
+  --mask-height: 40px; /* 👈 这是侧边栏的透镜高度，别动它 */
+
+  /* 👇 就在这里！直接输入你想要的数字，比如 80px */
+  --main-spacer-top: 60px;
+  --main-spacer-bottom: 40px;
 }
 
-/* 🌟 核心修复 1：Sidebar 浮层化 (固定在左侧，层级极高) */
 .sidebar {
   position: fixed;
   left: 0; top: 0; bottom: 0;
-  z-index: 1000; /* 保证悬浮在 Main 之上 */
+  z-index: 1000;
   width: var(--sidebar-collapsed-width);
   height: 100vh;
   background-color: #ffffff;
   display: flex;
   flex-direction: column; 
-  /* 加上 box-shadow 的过渡动画，展开时更丝滑 */
   transition: width 0.3s var(--transition-curve), box-shadow 0.3s var(--transition-curve);
   overflow: hidden;
-  
-  /* 👇 换成大厂质感阴影：默认收起态就存在，分近景和远景两层弥散 */
   box-shadow: 
     2px 0 8px rgba(0, 0, 0, 0.02), 
     8px 0 24px rgba(0, 0, 0, 0.02);
@@ -45,7 +44,6 @@ body {
 .sidebar:hover,
 .sidebar.is-pinned {
   width: var(--sidebar-expanded-width);
-  /* 👇 展开时，因为浮层面积变大，阴影的扩散半径也顺势加大一点点 */
   box-shadow: 
     4px 0 12px rgba(0, 0, 0, 0.02), 
     12px 0 32px rgba(0, 0, 0, 0.02);
@@ -69,6 +67,27 @@ body {
 .nav-mask-top .mask-tint { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
 .nav-mask-bottom .mask-tint { position: absolute; inset: 0; background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
 
+
+/* 🌟 核心修复 2：为主舞台（Main）追加光学透镜，高度与 Spacer 变量精准咬合 */
+.main-mask-top, .main-mask-bottom {
+  position: absolute; left: 0; right: 0; z-index: 10; pointer-events: none;
+}
+.main-mask-top { 
+  top: 100px; 
+  height: var(--main-spacer-top); /* 👈 透镜高度动态读取上方推力 */
+}
+.main-mask-bottom { 
+  /* 🌟 核心修复：原来是 100px，现在改为贴合新版 Footer 的 64px */
+  bottom: 64px; 
+  height: var(--main-spacer-bottom); 
+}
+
+/* 下面的滤镜渲染代码保持原样不动 */
+.main-mask-top .mask-blur { position: absolute; inset: 0; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); transform: translateZ(0); }
+.main-mask-bottom .mask-blur { position: absolute; inset: 0; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); transform: translateZ(0); }
+.main-mask-top .mask-tint { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
+.main-mask-bottom .mask-tint { position: absolute; inset: 0; background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
+
 /* =========================================
    ✨ 主导航列表与高亮滑块
    ========================================= */
@@ -76,9 +95,7 @@ body {
   position: absolute; top: 0; left: 0; 
   width: calc(100% - 14px); height: var(--item-height); 
   background-color: #E6E6E6; z-index: 0; 
-  /* 🌟 核心修复 2：硬编码死锁第一帧坐标 40px，彻底消灭 F5 刷新飞入 Bug */
   transform: translateY(40px);
-  /* 初始状态拔掉 transition，完全由 JS 控制 */
 }
 .active-highlight::before { content: ''; position: absolute; left: 0; top: 0; width: 7px; height: 100%; background-color: #000; }
 
@@ -138,7 +155,6 @@ body {
 /* =========================================
    🌟 右侧主内容区 (Main Content)
    ========================================= */
-/* 🌟 修复 1：将响应式容器基准上移给主内容区 */
 .main-content {
   margin-left: var(--sidebar-collapsed-width);
   width: calc(100% - var(--sidebar-collapsed-width));
@@ -147,7 +163,6 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  /* 👇 新增：让这里的 main-content 统领全局宽度计算 */
   container-type: inline-size; 
 }
 
@@ -158,51 +173,55 @@ body {
   font-family: 'MiSans', sans-serif; font-size: 14px; font-weight: 600; color: #191919;
   flex-shrink: 0; background-color: #FFFFFF; z-index: 10;
 }
-/* 👇 给 Header 加相对定位和溢出隐藏，用来关住那个巨大的背景字 */
 .content-header { 
   position: relative; 
+  /* 这一刀依然保留，防止内部元素破坏外部文档流 */
   overflow: hidden; 
   border-bottom: 1px solid rgba(237, 237, 240, 0.7); 
 }
-.content-footer { border-top: 1px solid rgba(237, 237, 240, 0.7); margin-top: auto; }
 
-/* 保证 Header 里的真实内容浮在文字之上 */
-.header-content { position: relative; z-index: 2; }
+.content-header::after { display: none; } /* 严禁使用白漆伪元素，拒绝脏灰 */
+.header-content { position: relative; z-index: 3; }
 
 /* =========================================
-   🌟 终极还原：镂空条纹渐隐字 (响应式 + 宽字体)
+   🌟 终极还原：镂空条纹渐隐字 (DOM 层级隔离法)
    ========================================= */
 
-/* 1. 如果你有这个字体文件，可以像这样引入（没有也没关系，下面有降级方案） */
 @font-face {
   font-family: 'MonumentExtended-Ultrabold';
-  /* 替换成你实际的字体路径 */
   src: url('./fonts/Monument-Extended/MonumentExtended-Ultrabold.woff2') format('woff2'); 
   font-weight: 700;
   font-display: block;
 }
 
-.hollow-bg-text {
+/* 🌟 核心修复：锁死坐标系结界 */
+.hollow-text-wrapper {
   position: absolute;
-  /* 🌟 核心修复：使用 vw/vh 相对单位，保证不同屏幕下位置比例不变 */
+  /* inset: 0 强迫这个罩子的大小与 Header (100px 高) 绝对等宽等高 */
+  inset: 0;      
+  z-index: 1; 
+  pointer-events: none;
+  /* 将巨大文字限制在这个 100px 的罩子里 */
+  overflow: hidden;
+  /* 此时的 50% 就是绝对的 50px 位置，100% 就是绝对的 100px 贴底位置，精准打击 */
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+}
+
+.hollow-bg-text {
+  /* 文字依然随便你怎么平移和缩放，但渐隐的范围已被父级焊死 */
+  position: absolute;
   top: -2vh;     
   left: 2vw;     
-  z-index: 1;
   user-select: none;     
-  pointer-events: none;  
   white-space: nowrap;
-  
-  /* 🌟 字体定制：优先用原版字体，如果没有，则降级为 Impact 或 Arial Black（极宽极粗） */
   font-family: 'MonumentExtended-Ultrabold', Impact, 'Arial Black', sans-serif;
   font-weight: 900;      
-  
-  /* 🌟 核心逻辑：最小值 16px，理想值 13vw，最大值 160px */
   font-size: clamp(200px, 16vw, 300px);     
   line-height: 1;
-  /* 同样建议把字间距也限制一下，避免极端比例下间距崩塌 */
   letter-spacing: clamp(-2px, 0.2vw, 2px);
 
-  /* 条纹背景保持不变 */
+  /* 条纹背景 */
   background-image: repeating-linear-gradient(
     -45deg,
     transparent 0,
@@ -214,41 +233,23 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent; 
-  
-  /* 消散蒙版保持不变 */
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%);
 }
 .content-footer { border-top: 1px solid rgba(237, 237, 240, 0.7); margin-top: auto; }
 
-/* 🌟 修复 2：神级 CSS 定位，精准跟踪动态网格右侧 34px */
 .custom-scrollbar {
   position: absolute;
   top: 100px; 
   bottom: 100px; 
-  /* 核心定位算法：容器中心(50%) + 当前网格一半宽度 + 34px固定间距 */
-  /* 默认 5 张卡最大宽度 1208，一半是 604。604 + 34 = 638 */
   left: calc(50% + 638px); 
   width: 6px;
   z-index: 99;
   pointer-events: none;
-  /* 增加 left 属性的过渡，在屏幕跳变缩放时，滚动条能丝滑飘过去 */
   transition: left 0.3s var(--transition-curve);
 }
 
-/* 与卡片网格完全一致的阶梯断点，精准同步跳变 */
-@container (max-width: 1367px) {
-  /* 4 张卡宽 962，一半是 481。481 + 34 = 515 */
-  .custom-scrollbar { left: calc(50% + 515px); } 
-}
-@container (max-width: 1121px) {
-  /* 3 张卡宽 716，一半是 358。358 + 34 = 392 */
-  .custom-scrollbar { left: calc(50% + 392px); } 
-}
-@container (max-width: 875px) {
-  /* 2 张卡宽 470，一半是 235。235 + 34 = 269 */
-  .custom-scrollbar { left: calc(50% + 269px); } 
-}
+@container (max-width: 1367px) { .custom-scrollbar { left: calc(50% + 515px); } }
+@container (max-width: 1121px) { .custom-scrollbar { left: calc(50% + 392px); } }
+@container (max-width: 875px) { .custom-scrollbar { left: calc(50% + 269px); } }
 
 .custom-thumb {
   width: 100%;
@@ -257,25 +258,37 @@ body {
   opacity: 0; 
   transition: opacity 0.4s ease; 
 }
-.custom-scrollbar.is-active .custom-thumb {
-  opacity: 1; /* 滚动时渐显 */
-}
+.custom-scrollbar.is-active .custom-thumb { opacity: 1; }
 
-/* 中部核心滚动区域 */
 .scrollable-body {
   flex: 1;
   overflow-y: auto;
-  /* 👇 删掉了这里的 container-type */
   -ms-overflow-style: none;  
   scrollbar-width: none;  
 }
 .scrollable-body::-webkit-scrollbar { display: none; }
 
+
+/* 🌟 核心修复 1：将内容容器彻底交给 Flex 引擎接管，实现强制物理居中 */
 .content-container {
-  box-sizing: border-box; margin: 0 auto;
-  padding: 80px 80px 120px 80px; width: 100%;
+  box-sizing: border-box; 
+  margin: 0 auto;
+  width: 100%;
+  /* 移除原本硬编码的 80px 侧边距，全部交给子元素的居中对齐处理 */
+  padding: var(--main-spacer-top) 0 var(--main-spacer-bottom) 0; 
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 强迫内部的所有网格都规规矩矩踩在屏幕最中央的中轴线上 */
 }
-.category-section { width: max-content; margin: 0 auto 60px auto; }
+
+/* 🌟 核心修复 1：勒紧区块宽度 */
+.category-section { 
+  width: fit-content; /* 让外壳死死贴合卡片网格的物理宽度，标题就会自然完美左对齐 */
+  margin-bottom: 60px; 
+}
+
+.category-section:last-of-type { margin-bottom: 0; }
+
 .category-title { font-family: 'MiSans', sans-serif; font-weight: 600; font-size: 16px; color: #191919; line-height: 1.5; margin: 0 0 36px 0; }
 
 .card-grid { display: grid; gap: 22px; grid-template-columns: repeat(5, 224px); }
@@ -283,7 +296,6 @@ body {
 @container (max-width: 1121px) { .card-grid { grid-template-columns: repeat(3, 224px); } }
 @container (max-width: 875px) { .card-grid { grid-template-columns: repeat(2, 224px); } }
 
-/* 🟠 卡片 UI 物理参数 */
 .site-card {
   box-sizing: border-box;
   width: 224px;
@@ -294,16 +306,12 @@ body {
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  position: relative; /* 🌟 必须加：为了定位底部的 4px 黑线 */
-  overflow: hidden; /* 🌟 必须加：为了裁切底部黑线的下圆角 */
-  
-  /* 🌟 完全复刻你提取的参数：0 8px 8px 10%透明度黑色 */
-  /* (这里用 box-shadow 替代 filter，视觉100%一样且能开启GPU硬件加速不卡顿) */
+  position: relative; 
+  overflow: hidden; 
   box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s var(--transition-curve), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 🌟 完美的底部 4px 描边：顶部绝对直角，底部完美 2px 圆角 */
 .site-card::after {
   content: '';
   position: absolute;
@@ -314,16 +322,10 @@ body {
 }
 
 .site-card:hover {
-  /* 悬停平滑上浮 8px (对应他代码里的 -0.5rem) */
   transform: translateY(-8px); 
-  /* 悬停时阴影稍作扩大，更符合物理世界的真实光影，如果你想完全跟他一样不变，删掉这行即可 */
   box-shadow: 0px 12px 16px rgba(0, 0, 0, 0.12);
 }
-
-.site-card:hover::after {
-  /* 悬停底边平滑变红 */
-  background-color: #FF4730;
-}
+.site-card:hover::after { background-color: #FF4730; }
 
 .card-header { display: flex; align-items: center; margin-bottom: 12px; gap: 12px; }
 .site-logo {
@@ -334,3 +336,196 @@ body {
 .logo-placeholder { font-size: 8px; color: #999; text-align: center; line-height: 1; }
 .site-name { margin: 0; font-family: 'MiSans', sans-serif; font-weight: 600; font-size: 14px; color: #191919; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .site-desc { margin: 0; font-family: 'MiSans', sans-serif; font-weight: 400; font-size: 12px; color: #575757; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
+
+/* =========================================
+   🚀 Footer 互动引擎 (Marquee + Wave Stagger)
+   ========================================= */
+.content-footer {
+  width: 100%;
+  height: 64px; /* 🌟 UI微调：高度 64px */
+  background-color: #1a1a1a;
+  transition: background-color 0.4s var(--transition-curve);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  border-top: none; 
+  cursor: pointer;
+}
+
+.content-footer:hover {
+  background-color: #FF4730; 
+}
+
+.footer-mask-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+/* 🌟 物理级防线：履带反挤压护盾 */
+.footer-marquee {
+  display: flex;
+  white-space: nowrap;
+  /* 🌟 核心修复 1：改用 width: max-content 强制撑开绝对长度 */
+  width: max-content; 
+  flex-shrink: 0;         
+  /* 🌟 核心修复 2：因为接下来要生成 4 组分身（总长度翻倍），所以时间必须翻倍到 40s 才能维持原有的匀速 */
+  animation: marqueeScroll 40s linear infinite; 
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translate3d(0, 0, 0); }
+  /* 依然是走 50% 轮回，但因为总共有 4 组，50% 刚好走完前 2 组，无缝衔接后 2 组 */
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.marquee-group {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding-right: 22px; 
+  flex-shrink: 0; /* 严禁组件群被压缩 */
+}
+
+.wave-item {
+  display: flex;
+  align-items: center;
+  font-family: 'MonumentExtended-Ultrabold', Impact, 'Arial Black', sans-serif;
+  font-size: 18px; /* 🌟 UI微调：18号字 */
+  color: #ffffff;
+  font-weight: 900;
+  flex-shrink: 0; /* 严禁单词被压缩 */
+}
+
+.wave-char {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  vertical-align: middle;
+  line-height: 1.1; 
+  flex-shrink: 0; /* 🌟 彻底消灭叠罗汉现象 */
+}
+
+.wave-inner {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: calc(var(--i) * 0.02s); 
+  will-change: transform;
+}
+
+.wave-front, .wave-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wave-bottom {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.content-footer:hover .wave-inner {
+  transform: translateY(-100%);
+}
+
+.wave-icon svg {
+  width: 14px;  /* 🌟 UI微调：14px 图标 */
+  height: 14px;
+  display: block;
+}
+.wave-bottom {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.content-footer:hover .wave-inner {
+  transform: translateY(-100%);
+}
+
+.wave-icon svg {
+  /* 🌟 修正：图标强行锁死 12x12 像素 */
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+/* =========================================
+   🚀 悬浮返回顶部按钮 (三明治结构)
+   ========================================= */
+.back-to-top {
+  position: fixed;
+  bottom: 50px;    /* 距底 60px */
+  right: 35px;     /* 距右 35px */
+  width: 80px;
+  height: 80px;
+  z-index: 1001;   /* 霸道层级，悬浮于一切之上 */
+  cursor: pointer;
+  border-radius: 50%;
+  
+  /* 初始不可见，带有下沉隐藏感 */
+  opacity: 0;
+  pointer-events: none; 
+  transform: translateY(20px);
+  transition: opacity 0.4s var(--transition-curve), transform 0.4s var(--transition-curve);
+}
+
+/* 配合 JS 触发的浮现状态 */
+.back-to-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* 细腻的交互反馈 */
+.back-to-top:hover {
+  transform: scale(1.05);
+}
+
+/* 第一层：黑透毛玻璃底座 */
+.btt-glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3); /* 30% 黑色 */
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  z-index: 1;
+}
+
+/* 第二层：匀速旋转的文字轨迹圈 */
+.btt-circle {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 80px;
+  height: 80px;
+  /* 开启 360度 无限匀速引擎 */
+  animation: bttSpin 10s linear infinite; 
+}
+
+@keyframes bttSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 第三层：绝对静止的中心轴箭头 */
+.btt-arrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 绝对物理居中，钉死在圆心 */
+  width: 22px;
+  height: 22px;
+  z-index: 3;
+}
