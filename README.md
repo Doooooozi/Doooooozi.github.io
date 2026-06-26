@@ -50,6 +50,7 @@ my-nav-site/
 └── README.md                # 项目架构与规范说明
 ```
 
+
 ## 🚀 部署指南 (Deployment)
 
 本项目目前为纯静态架构，推荐使用 **GitHub Pages**、**Vercel** 或 **Netlify** 进行托管。配置更新后，只需将导出的最新 `config.js` 推送至代码仓库，CI/CD 即可实现秒级自动部署。
