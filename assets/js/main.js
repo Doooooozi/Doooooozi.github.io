@@ -1,26 +1,11 @@
 // =========================================================
-// 1. 物理架构重构：将滑块剥离出滚动区，使其在屏幕上绝对静止
+// 1. Lenis 平滑滚动引擎初始化
 // =========================================================
 const sidebarContent = document.querySelector('.sidebar-content');
-const scrollWrapper = document.querySelector('.sidebar-scroll-wrapper');
-const highlightBox = document.getElementById('highlightBox');
-
-// 自动把滑块提到静止的包裹层中（无需修改你的 HTML）
-if (highlightBox && highlightBox.parentNode !== scrollWrapper) {
-  scrollWrapper.insertBefore(highlightBox, scrollWrapper.firstChild);
-  // 确保文字层级在滑块之上，不被遮挡
-  sidebarContent.style.position = 'relative';
-  sidebarContent.style.zIndex = '1';
-  highlightBox.style.zIndex = '0';
-}
-
-// =========================================================
-// 2. Lenis 平滑滚动引擎初始化
-// =========================================================
 const lenis = new Lenis({
   wrapper: sidebarContent, 
   content: sidebarContent.querySelector('.nav-menu'), 
-  duration: 0.8, // 调整为更干脆的滚动速度
+  duration: 0.8, 
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smoothWheel: true,
 });
@@ -32,46 +17,83 @@ function raf(time) {
 requestAnimationFrame(raf);
 
 // =========================================================
-// 3. 终极交互引擎：绝对静止吸附 (Snap & Glide)
+// 2. 核心引擎：绝对物理锁死 (Snap & Glide) + 渲染阻断
 // =========================================================
+const highlightBox = document.getElementById('highlightBox');
 const menuItems = document.querySelectorAll('.nav-menu .nav-item');
+
+// 🌟 修复【置顶加载闪跳】：在浏览器第一帧画出来之前，强行隐身！
+if (highlightBox) {
+  highlightBox.style.visibility = 'hidden';
+  highlightBox.style.transition = 'none';
+}
+
+// 物理防线：确保滑块乖乖呆在滚动容器内部，保证【手动滚轮时不脱节】
+const navMenu = document.querySelector('.nav-menu');
+if (highlightBox && highlightBox.parentNode !== navMenu) {
+  navMenu.insertBefore(highlightBox, navMenu.firstChild);
+}
 
 function alignHighlight(el, animate = true) {
   if (!el) return;
 
-  // 1. 计算居中对齐所需的滚动目标值
-  const wrapperHeight = sidebarContent.clientHeight;
-  const centerY = wrapperHeight / 2 - el.offsetHeight / 2;
+  const centerOffset = - (sidebarContent.clientHeight / 2) + (el.offsetHeight / 2);
+  const maxScroll = Math.max(0, sidebarContent.scrollHeight - sidebarContent.clientHeight);
+  const targetScroll = Math.max(0, Math.min(el.offsetTop + centerOffset, maxScroll));
   
-  const maxScroll = Math.max(0, sidebarContent.scrollHeight - wrapperHeight);
-  const targetScroll = Math.max(0, Math.min(el.offsetTop - centerY, maxScroll));
-  
-  // 2. 神奇公式：计算项目滚动结束后的【最终屏幕绝对 Y 坐标】
-  const finalScreenY = el.offsetTop - targetScroll;
+  const currentScroll = sidebarContent.scrollTop;
+  const isScrolling = Math.abs(targetScroll - currentScroll) > 2;
+
+  // 🌟 第一道防线：强制拔掉所有动画引擎
+  highlightBox.style.transition = 'none';
 
   if (!animate) {
-    // 瞬间静默加载（绝对没有跳动）
-    highlightBox.style.transition = 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)'; // 仅保留宽度的丝滑伸缩
-    highlightBox.style.transform = `translateY(${finalScreenY}px)`;
-    void highlightBox.offsetWidth; // 强制浏览器重排，钉死坐标
+    // 🔴 初次加载 / 尺寸变动：瞬间就位
+    highlightBox.style.transform = `translateY(${el.offsetTop}px)`;
     lenis.scrollTo(targetScroll, { immediate: true });
-  } else {
-    // 交互点击加载（滑块走向最终坐标，列表开始滚动找滑块）
-    highlightBox.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-    highlightBox.style.transform = `translateY(${finalScreenY}px)`;
     
-    lenis.scrollTo(targetScroll, { 
-      duration: 0.4, 
-      easing: (t) => 1 - Math.pow(1 - t, 4) 
+    // 🌟 终极护城河 (Double-rAF)：强迫浏览器在没有动画的情况下画完这一帧，下一帧再解除隐身
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        highlightBox.style.visibility = 'visible';
+        highlightBox.style.transition = 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      });
     });
+    
+  } else {
+    if (isScrolling) {
+      // 🔵 屏幕需要滚动 (防抖动模式)
+      // 1. 滑块瞬间 (0s) 贴合目标，绝不产生自身的拉扯抖动
+      highlightBox.style.transform = `translateY(${el.offsetTop}px)`;
+      
+      // 2. Lenis 带着【已贴合的滑块+文本】一起平滑居中
+      lenis.scrollTo(targetScroll, { 
+        duration: 0.5, 
+        easing: (t) => 1 - Math.pow(1 - t, 4) 
+      });
+
+      // 3. Double-rAF：确保瞬间瞬移彻底生效后，再恢复宽度缩放动画
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          highlightBox.style.transition = 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+      });
+      
+    } else {
+      // 🟢 屏幕不需要滚动（如点选附近的目录）：优雅地滑过去
+      void highlightBox.offsetHeight; // 强制重排
+      
+      highlightBox.style.transition = 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      highlightBox.style.transform = `translateY(${el.offsetTop}px)`;
+    }
   }
 }
 
 // =========================================================
-// 4. 彻底消灭初次加载跳动的护城河
+// 3. 彻底消灭初次加载跳动的护城河
 // =========================================================
 function initActiveState() {
-  if (highlightBox.dataset.initialized) return; // 拦截二次触发
+  if (highlightBox.dataset.initialized) return; 
   
   const initialActive = document.querySelector('.nav-menu .nav-item.active') || menuItems[0];
   if (initialActive) {
@@ -82,28 +104,28 @@ function initActiveState() {
     initialActive.classList.add('active');
     initialActive.setAttribute('aria-current', 'page');
     
-    alignHighlight(initialActive, false); // 绝对无动画执行
+    alignHighlight(initialActive, false); 
   }
   highlightBox.dataset.initialized = 'true';
 }
 
+// 🌟 抢在 DOM 绘制前立即执行一次，把滑块提前“钉死”在目标位置
+initActiveState();
 window.addEventListener('DOMContentLoaded', initActiveState);
-if (document.readyState === 'interactive' || document.readyState === 'complete') {
-  initActiveState();
-}
-// 防止字体加载导致布局撑开产生微小错位，无缝重算一次
 window.addEventListener('load', () => {
   const activeItem = document.querySelector('.nav-menu .nav-item.active');
   if (activeItem) alignHighlight(activeItem, false);
 });
 
 // =========================================================
-// 5. 事件委托模式 (高性能点击捕获)
+// 4. 事件委托模式 (高性能点击捕获)
 // =========================================================
-const navMenuContainer = document.querySelector('.nav-menu');
-navMenuContainer.addEventListener('click', function(e) {
+navMenu.addEventListener('click', function(e) {
   const clickedItem = e.target.closest('.nav-item');
   if (!clickedItem) return;
+  
+  // 💡 核心修复：阻止浏览器默认的锚点跳转，保证 URL 纯净无瑕！
+  e.preventDefault(); 
   
   menuItems.forEach(nav => {
     nav.classList.remove('active');
@@ -116,16 +138,13 @@ navMenuContainer.addEventListener('click', function(e) {
 });
 
 // =========================================================
-// 6. 固定面板按钮逻辑
+// 5. 固定面板与尺寸校准
 // =========================================================
 document.getElementById('pinBtn').addEventListener('click', function(e) {
   e.preventDefault();
   document.getElementById('sidebar').classList.toggle('is-pinned');
 });
 
-// =========================================================
-// 7. 尺寸变动与动效实时校准
-// =========================================================
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
