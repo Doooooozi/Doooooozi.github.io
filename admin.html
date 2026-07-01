@@ -4,59 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>导航管理后台</title>
-  
   <link rel="stylesheet" href="./assets/css/base.css">
   <link rel="stylesheet" href="./assets/css/sidebar.css">
   <link rel="stylesheet" href="./assets/css/admin-main.css">
 </head>
 <body>
   <aside class="sidebar admin-sidebar is-pinned" id="sidebar">
-    <div class="sidebar-header">
-      <div class="logo-box">LOGO</div>
-    </div>
-    
+    <div class="sidebar-header"><div class="logo-box">LOGO</div></div>
     <div class="sidebar-scroll-wrapper">
       <div class="nav-mask-top"><div class="mask-blur"></div><div class="mask-tint"></div></div> 
       <nav class="sidebar-content">
         <div class="nav-menu">
           <div class="active-highlight" id="adminHighlightBox"></div>
-          
-          <a href="#" class="nav-item active" id="menu-site">
-            <div class="icon-wrapper">svg</div><span class="text">网站管理</span>
-          </a>
-          <a href="#" class="nav-item" id="menu-nav">
-            <div class="icon-wrapper">svg</div><span class="text">导航管理</span>
-          </a>
+          <a href="#" class="nav-item active" id="menu-site"><div class="icon-wrapper">svg</div><span class="text">网站管理</span></a>
+          <a href="#" class="nav-item" id="menu-nav"><div class="icon-wrapper">svg</div><span class="text">导航管理</span></a>
         </div>
       </nav>
       <div class="nav-mask-bottom"><div class="mask-blur"></div><div class="mask-tint"></div></div> 
     </div>
-
     <div class="sidebar-footer">
       <div class="dark-banner" id="exportBtn" style="height: 44px; margin-bottom: 24px;">
         <div class="db-expanded" style="opacity: 1; pointer-events: auto;">
-          <div class="db-icon" style="background: transparent;">
-            <span style="font-size: 10px;">icon</span>
-          </div>
-          <div class="db-line-v"></div>
-          <div class="db-text-row">导出JSON</div>
+          <div class="db-icon" style="background: transparent;"><span style="font-size: 10px;">icon</span></div>
+          <div class="db-line-v"></div><div class="db-text-row">导出JSON</div>
         </div>
       </div>
     </div>
   </aside>
 
   <main class="main-content admin-main">
-    
     <div class="admin-view" id="view-site">
       <h1 class="admin-page-title">网站管理</h1>
-      
       <h2 class="section-title">全局设置</h2>
       <div class="settings-card">
         <div class="setting-row">
-          <div class="setting-info">
-            <div class="setting-name">标签图标 / Favicon</div>
-            <div class="setting-sub">大小32*32 图标位置：assets/images/</div>
-          </div>
+          <div class="setting-info"><div class="setting-name">标签图标 / Favicon</div><div class="setting-sub">大小32*32 图标位置：assets/images/</div></div>
           <div class="setting-action">
             <div class="split-upload-box" id="siteFaviconUpload">
               <input type="file" id="hiddenFaviconInput" accept=".svg" style="display: none;">
@@ -64,21 +46,13 @@
                 <input type="text" class="split-input" id="faviconFilename" placeholder="name" autocomplete="off">
                 <span class="split-ext">.svg</span>
               </div>
-              <div class="split-btn upload-trigger">
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1L5 5L9 1" stroke="#191919" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+              <div class="split-btn upload-trigger"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="#191919" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             </div>
           </div>
         </div>
         <div class="setting-divider"></div>
-
         <div class="setting-row">
-          <div class="setting-info">
-            <div class="setting-name">网站图标 / Logo</div>
-            <div class="setting-sub">大小52*52 图标位置：assets/images/</div>
-          </div>
+          <div class="setting-info"><div class="setting-name">网站图标 / Logo</div><div class="setting-sub">大小52*52 图标位置：assets/images/</div></div>
           <div class="setting-action">
             <div class="split-upload-box" id="siteLogoUpload">
               <input type="file" id="hiddenLogoInput" accept=".svg" style="display: none;">
@@ -86,33 +60,20 @@
                 <input type="text" class="split-input" id="logoFilename" placeholder="name" autocomplete="off">
                 <span class="split-ext">.svg</span>
               </div>
-              <div class="split-btn upload-trigger">
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1L5 5L9 1" stroke="#191919" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+              <div class="split-btn upload-trigger"><svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="#191919" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             </div>
           </div>
         </div>
         <div class="setting-divider"></div>
-
         <div class="setting-row">
-          <div class="setting-info">
-            <div class="setting-name">网站名称 / Index-Title</div>
-          </div>
-          <div class="setting-action">
-            <input type="text" class="setting-basic-input" id="siteTitleInput" placeholder="请输入">
-          </div>
+          <div class="setting-info"><div class="setting-name">网站名称 / Index-Title</div></div>
+          <div class="setting-action"><input type="text" class="setting-basic-input" id="siteTitleInput" placeholder="请输入"></div>
         </div>
       </div>
 
       <div class="module-header">
         <h2 class="section-title">Index - Sidebar - footer - module - 1</h2>
-        <button class="icon-btn add-module-btn" data-module="1">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 0V10M0 5H10" stroke="currentColor" stroke-width="2"/>
-          </svg>
-        </button>
+        <button class="icon-btn add-module-btn" data-module="1"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0V10M0 5H10" stroke="currentColor" stroke-width="2"/></svg></button>
       </div>
       <div class="admin-table-wrapper module-table-margin">
         <div class="admin-table-container">
@@ -125,11 +86,7 @@
 
       <div class="module-header">
         <h2 class="section-title">Index - Sidebar - footer - module - 2</h2>
-        <button class="icon-btn add-module-btn" data-module="2">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 0V10M0 5H10" stroke="currentColor" stroke-width="2"/>
-          </svg>
-        </button>
+        <button class="icon-btn add-module-btn" data-module="2"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0V10M0 5H10" stroke="currentColor" stroke-width="2"/></svg></button>
       </div>
       <div class="admin-table-wrapper module-table-margin">
         <div class="admin-table-container">
@@ -142,11 +99,7 @@
 
       <div class="module-header">
         <h2 class="section-title">Index - Sidebar - footer - module - 3</h2>
-        <button class="icon-btn add-module-btn" data-module="3">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 0V10M0 5H10" stroke="currentColor" stroke-width="2"/>
-          </svg>
-        </button>
+        <button class="icon-btn add-module-btn" data-module="3"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0V10M0 5H10" stroke="currentColor" stroke-width="2"/></svg></button>
       </div>
       <div class="admin-table-wrapper">
         <div class="admin-table-container">
@@ -156,30 +109,21 @@
           </table>
         </div>
       </div>
-      
     </div>
 
     <div class="admin-view" id="view-nav">
       <h1 class="admin-page-title">导航管理</h1>
-
       <div class="admin-toolbar" id="adminToolbar">
         <div class="toolbar-normal-group" id="toolbarNormalGroup">
-          <div class="tabs-wrapper">
-            <div class="admin-tabs" id="adminTabs"></div>
-          </div>
+          <div class="tabs-wrapper"><div class="admin-tabs" id="adminTabs"></div></div>
           <div class="admin-actions">
-            <button class="icon-btn add-btn" id="mainAddCategoryBtn">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 0V10M0 5H10" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </button>
+            <button class="icon-btn add-btn" id="mainAddCategoryBtn"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 0V10M0 5H10" stroke="currentColor" stroke-width="2"/></svg></button>
             <button class="text-btn">编辑列表</button>
             <div class="divider"></div>
             <button class="text-btn" id="enterBatchBtn">批量操作</button>
             <button class="primary-btn" id="addNavBtn">添加导航</button>
           </div>
         </div>
-
         <div class="toolbar-batch-group" id="toolbarBatchGroup">
           <button class="text-btn" id="exitBatchBtn">返回</button>
           <div class="divider" style="margin: 0 12px; height: 12px; width: 1px; background-color: #EBEBEB;"></div>
@@ -196,29 +140,17 @@
       <div class="admin-table-wrapper">
         <div class="admin-table-container" id="tableContainer">
           <table class="admin-table">
-            <thead>
-              <tr>
-                <th class="col-icon">图标</th>
-                <th>名称</th>
-                <th>URL</th>
-                <th>排序</th>
-                <th>操作</th>
-              </tr>
-            </thead>
+            <thead><tr><th class="col-icon">图标</th><th>名称</th><th>URL</th><th>排序</th><th>操作</th></tr></thead>
             <tbody id="tableBody"></tbody>
           </table>
         </div>
-        <div class="custom-scrollbar-h" id="customScrollbarH">
-          <div class="custom-thumb-h" id="customThumbH"></div>
-        </div>
+        <div class="custom-scrollbar-h" id="customScrollbarH"><div class="custom-thumb-h" id="customThumbH"></div></div>
       </div>
     </div>
 
     <div class="admin-modal-overlay" id="editCategoryModal">
       <div class="admin-modal-box">
-        <div class="modal-header">
-          <h2 class="modal-title">编辑列表</h2>
-        </div>
+        <div class="modal-header"><h2 class="modal-title">编辑列表</h2></div>
         <div class="modal-body">
           <div class="admin-table-container" style="border:none; border-radius:0; box-shadow:none;">
             <table class="admin-table modal-table">
@@ -252,7 +184,7 @@
               <input type="file" id="hiddenSvgInput" accept=".svg" style="display: none;">
               <div class="upload-icon-area"><div class="upload-cross">+</div></div>
               <div class="upload-text-area">
-                <div class="upload-clip-content"><input type="text" class="upload-filename-input-raw upload-trigger" id="uploadFilename" placeholder="name" autocomplete="off"></div>
+                <div class="upload-clip-content"><input type="text" class="upload-filename-input-raw" id="uploadFilename" placeholder="name" autocomplete="off"></div>
                 <span class="upload-tag-right">.svg</span>
               </div>
             </div>
@@ -295,7 +227,7 @@
               <input type="file" id="hiddenPngInput" accept=".png,.jpg,.jpeg" style="display: none;">
               <div class="upload-icon-area"><div class="upload-cross">+</div></div>
               <div class="upload-text-area">
-                <div class="upload-clip-content"><input type="text" class="upload-filename-input-raw upload-trigger" id="uploadPngFilename" placeholder="name" autocomplete="off"></div>
+                <div class="upload-clip-content"><input type="text" class="upload-filename-input-raw" id="uploadPngFilename" placeholder="name" autocomplete="off"></div>
                 <span class="upload-tag-right">.png</span>
               </div>
             </div>
@@ -357,16 +289,14 @@
           <div class="form-group" style="margin-bottom: 0;">
             <label class="form-label" style="margin-bottom: 0;">图片URL<span class="required-star">*</span></label>
             <div class="form-sub-label">图标位置：assets/images/</div>
-            
             <div class="upload-box" id="modSvgUploadBox">
               <input type="file" id="hiddenModSvgInput" accept=".svg" style="display: none;">
               <div class="upload-icon-area"><div class="upload-cross">+</div></div>
               <div class="upload-text-area">
-                <div class="upload-clip-content"><input type="text" class="upload-filename-input-raw upload-trigger" id="modUploadFilename" placeholder="name" autocomplete="off"></div>
+                <div class="upload-clip-content"><input type="text" class="upload-filename-input-raw" id="modUploadFilename" placeholder="name" autocomplete="off"></div>
                 <span class="upload-tag-right">.svg</span>
               </div>
             </div>
-
           </div>
         </div>
         <div class="modal-footer" style="justify-content: flex-end; gap: 12px;">
@@ -377,7 +307,6 @@
     </div>
 
   </main>
-
   <script src="./assets/js/admin.js" defer></script>
 </body>
 </html>

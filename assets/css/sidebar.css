@@ -64,13 +64,25 @@
    🟢 尾巴 (Footer)
    ========================================= */
 .sidebar-footer { flex-shrink: 0; display: flex; flex-direction: column; width: 100%; box-sizing: border-box; }
-.footer-module-1 { margin: 0 14px 0 14px; width: 42px; height: 110px; background-color: #F2F2F2; border-radius: 4px; transition: width 0.3s var(--transition-curve); overflow: hidden; display: flex; flex-direction: column; }
+.footer-module-1 { margin: 0 14px 0 14px; width: 42px; height: 110px; background-color: #F2F2F2; border-radius: 4px; transition: width 0.3s var(--transition-curve); overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
 .sidebar:hover .footer-module-1, .sidebar.is-pinned .footer-module-1 { width: calc(100% - 28px); }
+
 .footer-action-item { display: flex; align-items: center; height: 36px; padding: 0 7px; cursor: pointer; text-decoration: none; color: #333; width: 100%; box-sizing: border-box; transition: background-color 0.2s ease; }
 .footer-action-item:hover { background-color: #E6E6E6; }
 .footer-action-item .icon-wrapper { flex-shrink: 0; width: 28px; height: 28px; background-color: #e0e0e0; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; margin-left: 0; }
-.footer-action-item .text { margin-left: 10px; font-size: 13px; opacity: 0; transition: opacity 0.2s var(--transition-curve); white-space: nowrap; }
+
+/* 🌟 核心突破 1：释放 margin，注入 flex:1 使其接管所有剩余空间，并强行水平居中 */
+.footer-action-item .text { 
+  flex: 1; 
+  text-align: center; 
+  margin-left: 0; 
+  font-size: 13px; 
+  opacity: 0; 
+  transition: opacity 0.2s var(--transition-curve); 
+  white-space: nowrap; 
+}
 .sidebar:hover .footer-action-item .text, .sidebar.is-pinned .footer-action-item .text { opacity: 1; transition-delay: 0.1s; }
+
 .footer-divider { height: 1px; background-color: #EBEBEB; margin: 0 7px; flex-shrink: 0; }
 
 .dark-banner { margin: 18px 14px 0 14px; background-color: #1a1a1a; border-radius: 4px; position: relative; overflow: hidden; cursor: pointer; height: 92px; transition: all 0.3s var(--transition-curve); }
@@ -93,7 +105,17 @@
 .sidebar:hover .share-module, .sidebar.is-pinned .share-module { width: calc(100% - 28px); }
 .share-collapsed { position: absolute; left: 0; top: 0; width: 42px; height: 100%; display: flex; align-items: center; justify-content: center; opacity: 1; transition: opacity 0.2s; }
 .share-collapsed .s-icon { width: 24px; height: 24px; background-color: #B3B3B3; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: transparent; }
-.share-expanded { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 11px; box-sizing: border-box; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+
+/* 🌟 核心突破 2：抽干 Padding 水分，改用 space-evenly 强制水平均分 */
+.share-expanded { 
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%; 
+  display: flex; 
+  justify-content: space-evenly; 
+  align-items: center; 
+  padding: 0; /* 剥夺两端的硬编码填充 */
+  box-sizing: border-box; opacity: 0; pointer-events: none; transition: opacity 0.2s; 
+}
+
 .sidebar:hover .share-collapsed, .sidebar.is-pinned .share-collapsed { opacity: 0; pointer-events: none; }
 .sidebar:hover .share-expanded, .sidebar.is-pinned .share-expanded { opacity: 1; pointer-events: auto; }
 .s-mini-icon { width: 14px; height: 14px; background-color: #B3B3B3; border-radius: 2px; color: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s ease; }
