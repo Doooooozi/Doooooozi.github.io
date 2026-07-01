@@ -1,0 +1,108 @@
+{
+  "site": {
+    "title": "",
+    "favicon": "",
+    "logo": "",
+    "modules": {
+      "1": [
+        {
+          "id": "sm_1_1",
+          "name": "名称文本一行自适应名称文本...",
+          "url": "https://example.com",
+          "image": "",
+          "placeholder": "icon\nSVG",
+          "order": 0
+        },
+        {
+          "id": "sm_1_2",
+          "name": "名称文本一行自适应名称文本...",
+          "url": "https://example.com",
+          "image": "",
+          "placeholder": "icon\nSVG",
+          "order": 1
+        },
+        {
+          "id": "sm_1_3",
+          "name": "名称文本一行自适应名称文本...",
+          "url": "https://example.com",
+          "image": "",
+          "placeholder": "icon\nSVG",
+          "order": 2
+        }
+      ],
+      "2": [
+        {
+          "id": "sm_2_1",
+          "name": "名称文本一行自适应名称文本...",
+          "url": "https://example.com",
+          "image": "",
+          "placeholder": "icon\nSVG",
+          "order": 0
+        }
+      ],
+      "3": [
+        {
+          "id": "sm_3_1",
+          "name": "名称文本一行自适应名称文本...",
+          "url": "https://example.com",
+          "image": "",
+          "placeholder": "icon\nSVG",
+          "order": 0
+        },
+        {
+          "id": "sm_3_2",
+          "name": "名称文本一行自适应名称文本...",
+          "url": "https://example.com",
+          "image": "",
+          "placeholder": "icon\nSVG",
+          "order": 1
+        }
+      ]
+    }
+  },
+  "categories": [
+    {
+      "id": "cat_1",
+      "name": "分类目录1",
+      "order": 0,
+      "iconSvg": "",
+      "links": [
+        {
+          "id": "link_1",
+          "name": "Figma",
+          "url": "https://figma.com",
+          "image": "",
+          "placeholder": "logo\nPNG",
+          "desc": "这是一款基于浏览器的协同设计工具",
+          "order": 0
+        },
+        {
+          "id": "link_2",
+          "name": "站点名一行截断测试超长文本",
+          "url": "https://example.com",
+          "image": "",
+          "placeholder": "logo\nPNG",
+          "desc": "描述文案信息补充",
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "cat_2",
+      "name": "分类目录2",
+      "order": 1,
+      "iconSvg": "",
+      "links": [
+        {
+          "id": "link_3",
+          "name": "Notion",
+          "url": "https://notion.so",
+          "image": "",
+          "placeholder": "logo\nPNG",
+          "desc": "全能型笔记软件",
+          "order": 0
+        }
+      ]
+    }
+  ]
+}
