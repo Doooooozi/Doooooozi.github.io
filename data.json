@@ -71,7 +71,7 @@
           "id": "link_1",
           "name": "Figma",
           "url": "https://figma.com",
-          "image": "",
+          "image": "assets/images/weblogo/figma.png",
           "placeholder": "logo\nPNG",
           "desc": "这是一款基于浏览器的协同设计工具",
           "order": 0
@@ -97,7 +97,7 @@
           "id": "link_3",
           "name": "Notion",
           "url": "https://notion.so",
-          "image": "",
+          "image": "assets/images/weblogo/notion.png",
           "placeholder": "logo\nPNG",
           "desc": "全能型笔记软件",
           "order": 0
@@ -106,50 +106,143 @@
     },
     {
       "id": "cat_1782906568996",
-      "name": "界面灵感",
+      "name": "设计灵感",
       "order": 2,
       "iconSvg": "",
-      "links": []
+      "links": [
+        {
+          "id": "link_1782919083104",
+          "name": "macOSicons",
+          "url": "https://macosicons.com/",
+          "desc": "免费提供并分享 macOS 圆角矩形风格高画质应用图标的开源网站。该平台专注于帮助用户美化或更换 Mac 上的软件图标",
+          "image": "assets/images/weblogo/macosicons.png",
+          "placeholder": "logo\nPNG",
+          "order": 0
+        }
+      ]
+    },
+    {
+      "id": "cat_1782906623146",
+      "name": "AI",
+      "order": 3,
+      "iconSvg": "",
+      "links": [
+        {
+          "id": "link_1782919848533",
+          "name": "AI Studio",
+          "url": "https://aistudio.google.com/",
+          "desc": "基于 Web 的免费开发者原型设计平台，用于快速测试、调试并获取 API 密钥以调用 Gemini 系列大语言模型",
+          "image": "assets/images/weblogo/aistudio.png",
+          "placeholder": "logo\nPNG",
+          "order": 0
+        },
+        {
+          "id": "link_1782921297940",
+          "name": "Gemini",
+          "url": "https://gemini.google.com/",
+          "desc": "谷歌面向普通用户推出的多模态 AI 聊天机器人与智能助手，支持通过文字、语音或图片进行对话、写作、编程、翻译及创意策划",
+          "image": "assets/images/weblogo/gemini.png",
+          "placeholder": "logo\nPNG",
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "cat_1782918218603",
+      "name": "网络资源",
+      "order": 4,
+      "iconSvg": "",
+      "links": [
+        {
+          "id": "link_1782923219293",
+          "name": "CNIX",
+          "url": "https://xn--gmq396grzd.com/",
+          "desc": "提供网络代理与翻墙功能的“机场”服务商站点。该网站主要专注于提供游戏加速和网络优化服务",
+          "image": "assets/images/weblogo/cnix.png",
+          "placeholder": "logo\nPNG",
+          "order": 0
+        },
+        {
+          "id": "link_1782923638351",
+          "name": "Clash Verge Rev",
+          "url": "https://github.com/clash-verge-rev/clash-verge-rev",
+          "desc": "基于 Tauri 框架开发的跨平台网络代理客户端，作为已停更的 Clash Verge 的社区延续版，支持 Mihomo（原 Clash.Meta）内核，用于实现规则分流与科学上网",
+          "image": "assets/images/weblogo/clashvergerev.png",
+          "placeholder": "logo\nPNG",
+          "order": 1
+        },
+        {
+          "id": "link_1782924085421",
+          "name": "Magic Catling2",
+          "url": "https://t.me/s/merlinclashcat",
+          "desc": "专为华硕和梅林固件路由器开发的网络代理与科学上网插件，用于实现全家设备自动翻墙与网络加速",
+          "image": "assets/images/weblogo/magiccatling2.png",
+          "placeholder": "logo\nPNG",
+          "order": 2
+        }
+      ]
     },
     {
       "id": "cat_1782906577657",
-      "name": "网页灵感",
-      "order": 3,
+      "name": "软件资源",
+      "order": 5,
       "iconSvg": "",
-      "links": []
-    },
-    {
-      "id": "cat_1782906591650",
-      "name": "设计素材",
-      "order": 4,
-      "iconSvg": "",
-      "links": []
+      "links": [
+        {
+          "id": "link_1782918853224",
+          "name": "Cmacked",
+          "url": "https://cmacked.com/apps/",
+          "desc": "提供 Mac 平台付费软件和游戏免费破解版（Cracked） 的海外资源下载网站",
+          "image": "assets/images/weblogo/cmacked.png",
+          "placeholder": "logo\nPNG",
+          "order": 0
+        }
+      ]
     },
     {
       "id": "cat_1782906615142",
       "name": "在线工具",
-      "order": 5,
+      "order": 6,
       "iconSvg": "",
-      "links": []
+      "links": [
+        {
+          "id": "link_1782921726446",
+          "name": "CloudConvert",
+          "url": "https://cloudconvert.com/",
+          "desc": "在线的全能多功能文件格式转换网站，支持在音频、视频、文档、电子书、图片及压缩包等200多种格式之间进行互转",
+          "image": "assets/images/weblogo/cloudconvert.png",
+          "placeholder": "logo\nPNG",
+          "order": 0
+        },
+        {
+          "id": "link_1782922061126",
+          "name": "Remove BG",
+          "url": "https://www.remove.bg/",
+          "desc": "全自动在线 AI 图片抠图工具，可在 5 秒内精准移除照片背景并生成透明图像。该工具提供免费在线使用及 API 集成方案",
+          "image": "assets/images/weblogo/removebg.png",
+          "placeholder": "logo\nPNG",
+          "order": 1
+        }
+      ]
     },
     {
-      "id": "cat_1782906623146",
-      "name": "AI工具",
-      "order": 6,
+      "id": "cat_1782906591650",
+      "name": "设计素材",
+      "order": 7,
       "iconSvg": "",
       "links": []
     },
     {
       "id": "cat_1782906638356",
       "name": "UED团队",
-      "order": 7,
+      "order": 8,
       "iconSvg": "",
       "links": []
     },
     {
       "id": "cat_1782906646423",
       "name": "游戏相关",
-      "order": 8,
+      "order": 9,
       "iconSvg": "",
       "links": [
         {
@@ -160,6 +253,24 @@
           "image": "assets/images/weblogo/shangyoushijie.png",
           "placeholder": "logo\nPNG",
           "order": 0
+        },
+        {
+          "id": "link_1782916451389",
+          "name": "洛克王国工具箱",
+          "url": "https://rocom.aoe.top/",
+          "desc": "工具站，数据来源于洛克王国世界的游戏数据包",
+          "image": "assets/images/weblogo/luokewangguogongjuzhan.png",
+          "placeholder": "logo\nPNG",
+          "order": 1
+        },
+        {
+          "id": "link_1782916955314",
+          "name": "洛克王国世界WIKI",
+          "url": "https://wiki.biligame.com/rocom/%E9%A6%96%E9%A1%B5",
+          "desc": "最全面的官方及玩家社区百科是哔哩哔哩洛克王国世界BWIKI，提供公测版本的全精灵图鉴、进化路线和开荒攻略。",
+          "image": "assets/images/weblogo/luokewangguowiki.png",
+          "placeholder": "logo\nPNG",
+          "order": 2
         }
       ]
     }
