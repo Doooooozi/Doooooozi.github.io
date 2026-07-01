@@ -1,0 +1,105 @@
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  z-index: 1000;
+  width: var(--sidebar-collapsed-width);
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column; 
+  transition: width 0.3s var(--transition-curve), box-shadow 0.3s var(--transition-curve);
+  overflow: hidden;
+  box-shadow: 
+    2px 0 8px rgba(0, 0, 0, 0.02), 
+    8px 0 24px rgba(0, 0, 0, 0.02);
+}
+
+.sidebar:hover,
+.sidebar.is-pinned {
+  width: var(--sidebar-expanded-width);
+  box-shadow: 
+    4px 0 12px rgba(0, 0, 0, 0.02), 
+    12px 0 32px rgba(0, 0, 0, 0.02);
+}
+.sidebar-header { flex-shrink: 0; padding: 12px 0 0 9px; display: flex; }
+.logo-box { width: 52px; height: 52px; min-width: 52px; flex-shrink: 0; background-color: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+
+/* =========================================
+   🔵 核心滚动区与渐变毛玻璃透镜
+   ========================================= */
+.sidebar-scroll-wrapper { position: relative; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.sidebar-content { flex: 1; overflow-y: auto; scrollbar-width: none; padding: 0; }
+.sidebar-content::-webkit-scrollbar { display: none; }
+.nav-menu { position: relative; display: flex; flex-direction: column; will-change: transform; padding-top: var(--mask-height); padding-bottom: var(--mask-height); }
+
+.nav-mask-top, .nav-mask-bottom { position: absolute; left: 0; right: 0; height: var(--mask-height); z-index: 10; pointer-events: none; }
+.nav-mask-top { top: 0; }
+.nav-mask-bottom { bottom: 0; }
+.nav-mask-top .mask-blur { position: absolute; inset: 0; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); transform: translateZ(0); }
+.nav-mask-bottom .mask-blur { position: absolute; inset: 0; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); transform: translateZ(0); }
+.nav-mask-top .mask-tint { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
+.nav-mask-bottom .mask-tint { position: absolute; inset: 0; background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%); }
+
+/* =========================================
+   ✨ 主导航列表与高亮滑块
+   ========================================= */
+.active-highlight { 
+  position: absolute; top: 0; left: 0; 
+  width: calc(100% - 14px); height: var(--item-height); 
+  background-color: #E6E6E6; z-index: 0; 
+  transform: translateY(40px);
+}
+.active-highlight::before { content: ''; position: absolute; left: 0; top: 0; width: 7px; height: 100%; background-color: #000; }
+
+.nav-item { position: relative; z-index: 1; display: flex; align-items: center; height: var(--item-height); padding: 0 14px; cursor: pointer; white-space: nowrap; text-decoration: none; color: #333; margin-bottom: 2px; background-color: transparent; }
+.nav-item::before { content: ''; position: absolute; left: 14px; right: 14px; top: 0; height: 100%; background-color: transparent; z-index: -1; transition: background-color 0.2s; }
+.nav-item:hover::before { background-color: #E6E6E6; }
+.nav-item.active:hover::before { background-color: transparent; }
+.icon-wrapper { flex-shrink: 0; width: 28px; height: 28px; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; margin-left: 7px; transition: all 0.3s var(--transition-curve); }
+.active .icon-wrapper { background-color: #000; color: #fff; }
+.text { margin-left: 14px; font-size: 14px; opacity: 0; transition: opacity 0.2s var(--transition-curve); }
+.sidebar:hover .text, .sidebar.is-pinned .text { opacity: 1; transition-delay: 0.1s; }
+
+/* =========================================
+   🟢 尾巴 (Footer)
+   ========================================= */
+.sidebar-footer { flex-shrink: 0; display: flex; flex-direction: column; width: 100%; box-sizing: border-box; }
+.footer-module-1 { margin: 0 14px 0 14px; width: 42px; height: 110px; background-color: #F2F2F2; border-radius: 4px; transition: width 0.3s var(--transition-curve); overflow: hidden; display: flex; flex-direction: column; }
+.sidebar:hover .footer-module-1, .sidebar.is-pinned .footer-module-1 { width: calc(100% - 28px); }
+.footer-action-item { display: flex; align-items: center; height: 36px; padding: 0 7px; cursor: pointer; text-decoration: none; color: #333; width: 100%; box-sizing: border-box; transition: background-color 0.2s ease; }
+.footer-action-item:hover { background-color: #E6E6E6; }
+.footer-action-item .icon-wrapper { flex-shrink: 0; width: 28px; height: 28px; background-color: #e0e0e0; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; margin-left: 0; }
+.footer-action-item .text { margin-left: 10px; font-size: 13px; opacity: 0; transition: opacity 0.2s var(--transition-curve); white-space: nowrap; }
+.sidebar:hover .footer-action-item .text, .sidebar.is-pinned .footer-action-item .text { opacity: 1; transition-delay: 0.1s; }
+.footer-divider { height: 1px; background-color: #EBEBEB; margin: 0 7px; flex-shrink: 0; }
+
+.dark-banner { margin: 18px 14px 0 14px; background-color: #1a1a1a; border-radius: 4px; position: relative; overflow: hidden; cursor: pointer; height: 92px; transition: all 0.3s var(--transition-curve); }
+.sidebar:hover .dark-banner, .sidebar.is-pinned .dark-banner { height: 44px; }
+.dark-banner:hover { background-color: #FF4730; }
+.db-collapsed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 7px; color: #fff; opacity: 1; transition: opacity 0.2s; pointer-events: none; }
+.db-collapsed .db-icon { width: 28px; height: 28px; background: #333; display: flex; align-items: center; justify-content: center; font-size: 10px; transition: background 0.3s ease; }
+.dark-banner:hover .db-collapsed .db-icon { background: rgba(255,255,255,1); }
+.db-line-h { width: 28px; height: 1px; background: rgba(255,255,255,0.2); margin: 4px 0 12px 0; }
+.db-text-stack { display: flex; flex-direction: column; align-items: center; font-size: 12px; gap: 2px; }
+.db-expanded { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: row; align-items: center; padding: 0 7px; box-sizing: border-box; color: #fff; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+.sidebar:hover .db-collapsed, .sidebar.is-pinned .db-collapsed { opacity: 0; }
+.sidebar:hover .db-expanded, .sidebar.is-pinned .db-expanded { opacity: 1; }
+.db-expanded .db-icon { width: 28px; height: 28px; flex-shrink: 0; background: #333; display: flex; align-items: center; justify-content: center; font-size: 10px; transition: background 0.3s ease; }
+.dark-banner:hover .db-expanded .db-icon { background: rgba(255,255,255,0.2); }
+.db-line-v { width: 1px; height: 16px; background: rgba(255,255,255,0.2); margin: 0 14px; flex-shrink: 0; }
+.db-text-row { flex: 1; display: flex; justify-content: center; font-size: 14px; white-space: nowrap; font-weight: 500; }
+
+.share-module { margin: 18px 14px 0 14px; position: relative; width: 42px; height: 26px; background-color: #E6E6E6; border-radius: 2px; transition: width 0.3s var(--transition-curve); overflow: hidden; }
+.sidebar:hover .share-module, .sidebar.is-pinned .share-module { width: calc(100% - 28px); }
+.share-collapsed { position: absolute; left: 0; top: 0; width: 42px; height: 100%; display: flex; align-items: center; justify-content: center; opacity: 1; transition: opacity 0.2s; }
+.share-collapsed .s-icon { width: 24px; height: 24px; background-color: #B3B3B3; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: transparent; }
+.share-expanded { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0 11px; box-sizing: border-box; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+.sidebar:hover .share-collapsed, .sidebar.is-pinned .share-collapsed { opacity: 0; pointer-events: none; }
+.sidebar:hover .share-expanded, .sidebar.is-pinned .share-expanded { opacity: 1; pointer-events: auto; }
+.s-mini-icon { width: 14px; height: 14px; background-color: #B3B3B3; border-radius: 2px; color: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background-color 0.3s ease; }
+.s-mini-icon:hover { background-color: #000000; }
+
+.pin-module { position: relative; margin: 12px 14px 12px 14px; height: var(--item-height); background: transparent; }
+.pin-btn { position: absolute; right: 0; width: 42px; height: 100%; display: flex; align-items: center; justify-content: center; cursor: pointer; background-color: transparent; }
+.pin-btn .p-icon { width: 24px; height: 24px; background-color: #e0e0e0; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; transition: background-color 0.3s ease, color 0.3s ease; }
+.pin-btn:hover .p-icon { background-color: #000000; color: #ffffff; }

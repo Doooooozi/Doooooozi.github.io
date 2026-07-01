@@ -1,0 +1,71 @@
+/* =========================================
+   💡 本地字体引入：MiSans 家族
+   ========================================= */
+@font-face { font-family: 'MiSans'; src: url('./fonts/MiSans/MiSans-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: 'MiSans'; src: url('./fonts/MiSans/MiSans-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: block; }
+@font-face { font-family: 'MiSans'; src: url('./fonts/MiSans/MiSans-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: block; }
+
+/* --- 页面基础环境重置 --- */
+body {
+  margin: 0;
+  background-color: #1a1a1a;
+  font-family: 'MiSans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  position: relative;
+}
+
+:root {
+  --sidebar-collapsed-width: 70px;
+  --sidebar-expanded-width: 240px; 
+  --transition-curve: cubic-bezier(0.4, 0, 0.2, 1); 
+  --item-height: 44px;      
+  --mask-height: 40px; /* 👈 这是侧边栏的透镜高度，别动它 */
+
+  /* 👇 就在这里！直接输入你想要的数字，比如 80px */
+  --main-spacer-top: 60px;
+  --main-spacer-bottom: 40px;
+}
+
+/* =========================================
+   🚀 弹窗 2：分类信息表单矩阵 (436px)
+   ========================================= */
+
+/* 强制覆盖第二个弹窗宽度：18 + 400 + 18 = 436px */
+.info-modal-box { width: 436px; }
+.form-body { padding: 18px; }
+
+.form-group { margin-bottom: 14px; }
+.form-label { 
+  display: block; font-family: 'MiSans', sans-serif; font-size: 14px; font-weight: 700; color: #191919; margin-bottom: 8px; 
+}
+.form-sub-label { 
+  font-family: 'MiSans', sans-serif; font-size: 12px; font-weight: 400; color: #999999; margin-top: -4px; margin-bottom: 8px; 
+}
+
+/* 输入框：4px 圆角，#EEEEEE 1px 描边 */
+.form-input {
+  width: 100%; box-sizing: border-box; 
+  height: 36px; padding: 0 12px; 
+  border: 1px solid #EEEEEE; border-radius: 4px; 
+  font-family: 'MiSans', sans-serif; font-size: 14px; color: #191919; 
+  transition: border-color 0.2s; outline: none;
+}
+.form-input::placeholder { color: #999999; font-weight: 400; }
+.form-input:focus { border-color: #191919; }
+
+/* 拖拽上传框：相对定位结界，底部绝对停靠文本 */
+.upload-box {
+  width: 100%; height: 120px; box-sizing: border-box;
+  border: 1px solid #EEEEEE; border-radius: 4px;
+  background-color: #ffffff;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; cursor: pointer; transition: background-color 0.2s;
+}
+.upload-box:hover { background-color: #FAFAFA; }
+
+.upload-cross { font-size: 24px; color: #191919; font-weight: 400; user-select: none; }
+.upload-tag-left, .upload-tag-right { 
+  position: absolute; bottom: 8px; 
+  font-family: 'MiSans', sans-serif; font-size: 12px; color: #999999; 
+}
+.upload-tag-left { left: 12px; }
+.upload-tag-right { right: 12px; }
