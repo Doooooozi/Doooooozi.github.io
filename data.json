@@ -1,30 +1,30 @@
 {
   "site": {
-    "title": "",
+    "title": "Doooo's Site Map",
     "favicon": "",
     "logo": "",
     "modules": {
       "1": [
         {
           "id": "sm_1_1",
-          "name": "名称文本一行自适应名称文本...",
-          "url": "https://example.com",
+          "name": "快捷链接 1",
+          "url": "#",
           "image": "",
           "placeholder": "icon\nSVG",
           "order": 0
         },
         {
           "id": "sm_1_2",
-          "name": "名称文本一行自适应名称文本...",
-          "url": "https://example.com",
+          "name": "快捷链接 2",
+          "url": "#",
           "image": "",
           "placeholder": "icon\nSVG",
           "order": 1
         },
         {
           "id": "sm_1_3",
-          "name": "名称文本一行自适应名称文本...",
-          "url": "https://example.com",
+          "name": "快捷链接 3",
+          "url": "#",
           "image": "",
           "placeholder": "icon\nSVG",
           "order": 2
@@ -33,8 +33,8 @@
       "2": [
         {
           "id": "sm_2_1",
-          "name": "名称文本一行自适应名称文本...",
-          "url": "https://example.com",
+          "name": "文本文本",
+          "url": "#",
           "image": "",
           "placeholder": "icon\nSVG",
           "order": 0
@@ -43,16 +43,16 @@
       "3": [
         {
           "id": "sm_3_1",
-          "name": "名称文本一行自适应名称文本...",
-          "url": "https://example.com",
+          "name": "LINK 1",
+          "url": "#",
           "image": "",
           "placeholder": "icon\nSVG",
           "order": 0
         },
         {
           "id": "sm_3_2",
-          "name": "名称文本一行自适应名称文本...",
-          "url": "https://example.com",
+          "name": "LINK 2",
+          "url": "#",
           "image": "",
           "placeholder": "icon\nSVG",
           "order": 1
@@ -63,7 +63,7 @@
   "categories": [
     {
       "id": "cat_1",
-      "name": "分类目录1",
+      "name": "设计必看",
       "order": 0,
       "iconSvg": "",
       "links": [
@@ -89,7 +89,7 @@
     },
     {
       "id": "cat_2",
-      "name": "分类目录2",
+      "name": "社区资讯",
       "order": 1,
       "iconSvg": "",
       "links": [
@@ -103,6 +103,55 @@
           "order": 0
         }
       ]
+    },
+    {
+      "id": "cat_1782906568996",
+      "name": "界面灵感",
+      "order": 2,
+      "iconSvg": "",
+      "links": []
+    },
+    {
+      "id": "cat_1782906577657",
+      "name": "网页灵感",
+      "order": 3,
+      "iconSvg": "",
+      "links": []
+    },
+    {
+      "id": "cat_1782906591650",
+      "name": "设计素材",
+      "order": 4,
+      "iconSvg": "",
+      "links": []
+    },
+    {
+      "id": "cat_1782906615142",
+      "name": "在线工具",
+      "order": 5,
+      "iconSvg": "",
+      "links": []
+    },
+    {
+      "id": "cat_1782906623146",
+      "name": "AI工具",
+      "order": 6,
+      "iconSvg": "",
+      "links": []
+    },
+    {
+      "id": "cat_1782906638356",
+      "name": "UED团队",
+      "order": 7,
+      "iconSvg": "",
+      "links": []
+    },
+    {
+      "id": "cat_1782906646423",
+      "name": "游戏相关",
+      "order": 8,
+      "iconSvg": "",
+      "links": []
     }
   ]
 }
