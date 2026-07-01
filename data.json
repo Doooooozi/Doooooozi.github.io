@@ -151,7 +151,17 @@
       "name": "游戏相关",
       "order": 8,
       "iconSvg": "",
-      "links": []
+      "links": [
+        {
+          "id": "link_1782915646299",
+          "name": "上游世界",
+          "url": "https://www.vgter.net/",
+          "desc": "专门提供 Nintendo Switch 和 PS4 等主机及 PC 破解游戏资源与汉化补丁下载的分享网站",
+          "image": "assets/images/weblogo/shangyoushijie.png",
+          "placeholder": "logo\nPNG",
+          "order": 0
+        }
+      ]
     }
   ]
 }
